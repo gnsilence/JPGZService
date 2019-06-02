@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>JPGZService.Application</AssemblyName>
+    <PackageId>JPGZService.Application</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>JPGZService</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>FEATURE_SIGNALR_ASPNETCORE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\西安驾培公众平台\项目源码\驾培公众平台\后端源码\JPGZService\src\JPGZService.Application\JPGZService.Application.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netcoreapp2.0\</OutputPath>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Authorization\Accounts\**" />
+    <Compile Remove="ClassInfos\**" />
+    <Compile Remove="ConfigFirsts\**" />
+    <Compile Remove="GzptService\**" />
+    <Compile Remove="SchoolSubjects\**" />
+    <Compile Remove="UserAccount\**" />
+    <Compile Remove="Vehicles\**" />
+    <EmbeddedResource Remove="Authorization\Accounts\**" />
+    <EmbeddedResource Remove="ClassInfos\**" />
+    <EmbeddedResource Remove="ConfigFirsts\**" />
+    <EmbeddedResource Remove="GzptService\**" />
+    <EmbeddedResource Remove="SchoolSubjects\**" />
+    <EmbeddedResource Remove="UserAccount\**" />
+    <EmbeddedResource Remove="Vehicles\**" />
+    <None Remove="Authorization\Accounts\**" />
+    <None Remove="ClassInfos\**" />
+    <None Remove="ConfigFirsts\**" />
+    <None Remove="GzptService\**" />
+    <None Remove="SchoolSubjects\**" />
+    <None Remove="UserAccount\**" />
+    <None Remove="Vehicles\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JPGZService.Core\JPGZService.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hangfire.HttpJob.Ext" Version="1.0.5" />
+    <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.core\2.0.4\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.4.3\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+</Project>
