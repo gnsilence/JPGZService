@@ -10,7 +10,6 @@ using Abp.MultiTenancy;
 using Abp.Runtime.Security;
 using JPGZService.EntityFrameworkCore;
 using JPGZService.EntityFrameworkCore.Seed;
-using JPGZService.MultiTenancy;
 
 namespace JPGZService.Migrator
 {
@@ -18,19 +17,16 @@ namespace JPGZService.Migrator
     {
         private readonly Log _log;
         private readonly AbpZeroDbMigrator _migrator;
-        private readonly IRepository<Tenant> _tenantRepository;
         private readonly IDbPerTenantConnectionStringResolver _connectionStringResolver;
 
         public MultiTenantMigrateExecuter(
             AbpZeroDbMigrator migrator,
-            IRepository<Tenant> tenantRepository,
             Log log,
             IDbPerTenantConnectionStringResolver connectionStringResolver)
         {
             _log = log;
 
             _migrator = migrator;
-            _tenantRepository = tenantRepository;
             _connectionStringResolver = connectionStringResolver;
         }
 
@@ -73,39 +69,39 @@ namespace JPGZService.Migrator
             _log.Write("--------------------------------------------------------");
 
             var migratedDatabases = new HashSet<string>();
-            var tenants = _tenantRepository.GetAllList(t => t.ConnectionString != null && t.ConnectionString != "");
-            for (var i = 0; i < tenants.Count; i++)
-            {
-                var tenant = tenants[i];
-                _log.Write(string.Format("Tenant database migration started... ({0} / {1})", (i + 1), tenants.Count));
-                _log.Write("Name              : " + tenant.Name);
-                _log.Write("TenancyName       : " + tenant.TenancyName);
-                _log.Write("Tenant Id         : " + tenant.Id);
-                _log.Write("Connection string : " + SimpleStringCipher.Instance.Decrypt(tenant.ConnectionString));
+            //var tenants = tenantRepository.GetAllList(t => t.ConnectionString != null && t.ConnectionString != "");
+            //for (var i = 0; i < tenants.Count; i++)
+            //{
+            //    var tenant = tenants[i];
+            //    _log.Write(string.Format("Tenant database migration started... ({0} / {1})", (i + 1), tenants.Count));
+            //    _log.Write("Name              : " + tenant.Name);
+            //    _log.Write("TenancyName       : " + tenant.TenancyName);
+            //    _log.Write("Tenant Id         : " + tenant.Id);
+            //    _log.Write("Connection string : " + SimpleStringCipher.Instance.Decrypt(tenant.ConnectionString));
 
-                if (!migratedDatabases.Contains(tenant.ConnectionString))
-                {
-                    try
-                    {
-                        _migrator.CreateOrMigrateForTenant(tenant);
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.Write("An error occured during migration of tenant database:");
-                        _log.Write(ex.ToString());
-                        _log.Write("Skipped this tenant and will continue for others...");
-                    }
+            //    if (!migratedDatabases.Contains(tenant.ConnectionString))
+            //    {
+            //        try
+            //        {
+            //            _migrator.CreateOrMigrateForTenant(tenant);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            _log.Write("An error occured during migration of tenant database:");
+            //            _log.Write(ex.ToString());
+            //            _log.Write("Skipped this tenant and will continue for others...");
+            //        }
 
-                    migratedDatabases.Add(tenant.ConnectionString);
-                }
-                else
-                {
-                    _log.Write("This database has already migrated before (you have more than one tenant in same database). Skipping it....");
-                }
+            //        migratedDatabases.Add(tenant.ConnectionString);
+            //    }
+            //    else
+            //    {
+            //        _log.Write("This database has already migrated before (you have more than one tenant in same database). Skipping it....");
+            //    }
 
-                _log.Write(string.Format("Tenant database migration completed. ({0} / {1})", (i + 1), tenants.Count));
-                _log.Write("--------------------------------------------------------");
-            }
+            //    _log.Write(string.Format("Tenant database migration completed. ({0} / {1})", (i + 1), tenants.Count));
+            //    _log.Write("--------------------------------------------------------");
+            //}
 
             _log.Write("All databases have been migrated.");
 

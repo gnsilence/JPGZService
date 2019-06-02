@@ -33,8 +33,8 @@ namespace JPGZService.Web.Host.Startup
 
             if (authAttributes)
             {
-                operation.Responses.Add("401", new Response { Description = "暂无访问权限" });
-                operation.Responses.Add("403", new Response { Description = "禁止访问" });
+                operation.Responses.Add("401", new Response { Description = "Unauthorized" });
+                operation.Responses.Add("403", new Response { Description = "Forbidden" });
                 //给api添加锁的标注
                 operation.Security = new List<IDictionary<string, IEnumerable<string>>>
                 {

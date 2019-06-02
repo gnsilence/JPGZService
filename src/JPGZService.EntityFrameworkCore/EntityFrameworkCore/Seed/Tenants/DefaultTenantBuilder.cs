@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Abp.MultiTenancy;
-using JPGZService.Editions;
-using JPGZService.MultiTenancy;
 
 namespace JPGZService.EntityFrameworkCore.Seed.Tenants
 {

@@ -19,21 +19,18 @@
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Authorization\Accounts\**" />
     <Compile Remove="ClassInfos\**" />
     <Compile Remove="ConfigFirsts\**" />
     <Compile Remove="GzptService\**" />
     <Compile Remove="SchoolSubjects\**" />
     <Compile Remove="UserAccount\**" />
     <Compile Remove="Vehicles\**" />
-    <EmbeddedResource Remove="Authorization\Accounts\**" />
     <EmbeddedResource Remove="ClassInfos\**" />
     <EmbeddedResource Remove="ConfigFirsts\**" />
     <EmbeddedResource Remove="GzptService\**" />
     <EmbeddedResource Remove="SchoolSubjects\**" />
     <EmbeddedResource Remove="UserAccount\**" />
     <EmbeddedResource Remove="Vehicles\**" />
-    <None Remove="Authorization\Accounts\**" />
     <None Remove="ClassInfos\**" />
     <None Remove="ConfigFirsts\**" />
     <None Remove="GzptService\**" />

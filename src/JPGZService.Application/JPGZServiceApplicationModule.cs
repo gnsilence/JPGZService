@@ -1,7 +1,7 @@
 ﻿using Abp.AutoMapper;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using JPGZService.Authorization;
+//using JPGZService.Authorization;
 
 namespace JPGZService
 {
@@ -12,7 +12,7 @@ namespace JPGZService
     {
         public override void PreInitialize()
         {
-            Configuration.Authorization.Providers.Add<JPGZServiceAuthorizationProvider>();
+            //Configuration.Authorization.Providers.Add<JPGZServiceAuthorizationProvider>();
         }
 
         public override void Initialize()

@@ -50,7 +50,6 @@ namespace JPGZService.Web.Host.Startup
                 options => options.Filters.Add(new CorsAuthorizationFilterFactory(_defaultCorsPolicyName))
             );
 
-            IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
             ConfigHangfire.ConfigureHangFire(services,_appConfiguration);
 #if FEATURE_SIGNALR_ASPNETCORE
@@ -96,7 +95,7 @@ namespace JPGZService.Web.Host.Startup
                 });
                 options.DocInclusionPredicate((docName, description) => true);
 
-                // Define the BearerAuth scheme that's in use
+                // Define the oauth2 scheme that's in use
                 options.AddSecurityDefinition("oauth2", new OAuth2Scheme()
                 {
                    Flow= "implicit",//只需通过浏览器获取令牌（适用于swagger）
@@ -136,7 +135,7 @@ namespace JPGZService.Web.Host.Startup
             app.UseAuthentication();
 
             app.UseAbpRequestLocalization();
-
+            // config hangfire use httpjob
             ConfigHangfire.UseHangfireSettings(app,env,loggerFactory);
 
 #if FEATURE_SIGNALR

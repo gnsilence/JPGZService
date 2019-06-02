@@ -5,7 +5,6 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor.MsDependencyInjection;
 using Abp.Dependency;
 using JPGZService.EntityFrameworkCore;
-using JPGZService.Identity;
 
 namespace JPGZService.Tests.DependencyInjection
 {
@@ -15,7 +14,7 @@ namespace JPGZService.Tests.DependencyInjection
         {
             var services = new ServiceCollection();
 
-            IdentityRegistrar.Register(services);
+            //IdentityRegistrar.Register(services);
 
             services.AddEntityFrameworkInMemoryDatabase();
 

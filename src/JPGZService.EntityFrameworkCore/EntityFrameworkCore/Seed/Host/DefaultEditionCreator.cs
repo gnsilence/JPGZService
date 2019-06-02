@@ -2,7 +2,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Abp.Application.Editions;
 using Abp.Application.Features;
-using JPGZService.Editions;
 
 namespace JPGZService.EntityFrameworkCore.Seed.Host
 {

@@ -1,5 +1,4 @@
 ﻿using Abp.EntityFrameworkCore;
-using JPGZService.StudentBases;
 using JPGZService.testmysqldb;
 using Microsoft.EntityFrameworkCore;
 using System;

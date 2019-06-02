@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Castle.Windsor.MsDependencyInjection;
 using Abp.Dependency;
-using JPGZService.Identity;
-
 namespace JPGZService.Migrator.DependencyInjection
 {
     public static class ServiceCollectionRegistrar
@@ -11,7 +9,7 @@ namespace JPGZService.Migrator.DependencyInjection
         {
             var services = new ServiceCollection();
 
-            IdentityRegistrar.Register(services);
+            //IdentityRegistrar.Register(services);
 
             WindsorRegistrationHelper.CreateServiceProvider(iocManager.IocContainer, services);
         }

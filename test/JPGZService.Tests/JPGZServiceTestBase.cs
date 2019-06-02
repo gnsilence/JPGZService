@@ -9,12 +9,9 @@ using Abp.Events.Bus.Entities;
 using Abp.MultiTenancy;
 using Abp.Runtime.Session;
 using Abp.TestBase;
-using JPGZService.Authorization.Users;
 using JPGZService.EntityFrameworkCore;
 using JPGZService.EntityFrameworkCore.Seed.Host;
 using JPGZService.EntityFrameworkCore.Seed.Tenants;
-using JPGZService.MultiTenancy;
-
 namespace JPGZService.Tests
 {
     public abstract class JPGZServiceTestBase : AbpIntegratedTestBase<JPGZServiceTestModule>

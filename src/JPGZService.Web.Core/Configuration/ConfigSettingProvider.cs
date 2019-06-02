@@ -9,6 +9,11 @@ namespace JPGZService.Configuration
 {
     public class ConfigSettingProvider : SettingProvider
     {
+        /// <summary>
+        /// 设置邮件及其他配置信息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override IEnumerable<SettingDefinition> GetSettingDefinitions(SettingDefinitionProviderContext context)
         {
             return new[]
