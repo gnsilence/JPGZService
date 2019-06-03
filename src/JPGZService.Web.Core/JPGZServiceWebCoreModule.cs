@@ -50,18 +50,22 @@ namespace JPGZService
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(
                 JPGZServiceConsts.ConnectionStringName
             );
-            //使用redis作为缓存
-            Configuration.Caching.UseRedis(options =>
+            //禁用redis缓存会自动使用内存缓存
+            if (bool.Parse(_appConfiguration["App:RedisCache:IsEnabled"]))
             {
-                options.ConnectionString = _appConfiguration["App:RedisCache:ConnectionString"];
-                options.DatabaseId = _appConfiguration.GetValue<int>("App:RedisCache:DatabaseId");
-            });
-            //配置redis的Cache过期时间
-            Configuration.Caching.Configure("mycache", cache =>
-            {
-                //缓存滑动过期时间,时长应当根据数据的更新频率来设置
-                cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10);
-            });
+                //使用redis作为缓存
+                Configuration.Caching.UseRedis(options =>
+                {
+                    options.ConnectionString = _appConfiguration["App:RedisCache:ConnectionString"];
+                    options.DatabaseId = _appConfiguration.GetValue<int>("App:RedisCache:DatabaseId");
+                });
+                //配置redis的Cache过期时间
+                Configuration.Caching.Configure("mycache", cache =>
+                {
+                    //缓存滑动过期时间,时长应当根据数据的更新频率来设置
+                    cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10);
+                });
+            }
             //其他缓存时间配置
             Configuration.Caching.ConfigureAll(options =>
             {
