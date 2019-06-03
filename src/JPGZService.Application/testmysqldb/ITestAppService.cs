@@ -20,5 +20,7 @@ namespace JPGZService.testmysqldb
         Task<List<Person>> GetPersonsByRedisCache();
 
         Task<GetPersonNameDto> GetPersonNameByEntityCache(int id);
+
+        void SendEmail(EmalSendDto emalSendDto);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Abp.AutoMapper;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
+using JPGZService.Interceptors;
 //using JPGZService.Authorization;
 
 namespace JPGZService
@@ -13,6 +14,7 @@ namespace JPGZService
         public override void PreInitialize()
         {
             //Configuration.Authorization.Providers.Add<JPGZServiceAuthorizationProvider>();
+            ServiceInterceptorRegistrar.Initialize(IocManager.IocContainer.Kernel);
         }
 
         public override void Initialize()

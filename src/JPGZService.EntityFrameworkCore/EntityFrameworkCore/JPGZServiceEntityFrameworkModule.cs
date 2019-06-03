@@ -8,13 +8,26 @@ using Abp.Reflection.Extensions;
 namespace JPGZService.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(JPGZServiceCoreModule), 
+        typeof(JPGZServiceCoreModule),
         typeof(AbpEntityFrameworkCoreModule))]
     public class JPGZServiceEntityFrameworkModule : AbpModule
     {
         /* Used it tests to skip dbcontext registration, in order to use in-memory database of EF Core */
         public bool SkipDbContextRegistration { get; set; }
 
+        // SkipRegister SqlserverContext
+        public bool SkipSqlserverDbContextRegistration { get; set; } = false;
+        /// <summary>
+        /// SkipRegister MysqlContext
+        /// </summary>
+        public bool SkipMysqlDbContextRegistration { get; set; }
+        /// <summary>
+        /// Skip postSqlContext
+        /// </summary>
+        public bool SkipPostgreSqlDbContextRegistration { get; set; }
+        /// <summary>
+        /// skip seed initdata
+        /// </summary>
         public bool SkipDbSeed { get; set; }
 
         public override void PreInitialize()
@@ -23,43 +36,51 @@ namespace JPGZService.EntityFrameworkCore
 
             if (!SkipDbContextRegistration)
             {
-                Configuration.Modules.AbpEfCore().AddDbContext<JPGZServiceDbContext>(options =>
+                if (!SkipSqlserverDbContextRegistration)
                 {
-                    if (options.ExistingConnection != null)
+                    Configuration.Modules.AbpEfCore().AddDbContext<JPGZServiceDbContext>(options =>
                     {
-                        JPGZServiceDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
-                    }
-                    else
+                        if (options.ExistingConnection != null)
+                        {
+                            JPGZServiceDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
+                        }
+                        else
+                        {
+                            JPGZServiceDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
+                        }
+                    });
+                }
+                if (!SkipMysqlDbContextRegistration)
+                {
+                    //配置mysql数据库
+                    Configuration.Modules.AbpEfCore().AddDbContext<JPGZServiceMysqlDbContext>(options =>
                     {
-                        JPGZServiceDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                    }
-                });
+                        if (options.ExistingConnection != null)
+                        {
+                            JPGZServiceMysqlDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
+                        }
+                        else
+                        {
+                            JPGZServiceMysqlDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
+                        }
+                    });
+                }
 
-                //配置mysql数据库
-                Configuration.Modules.AbpEfCore().AddDbContext<JPGZServiceMysqlDbContext>(options =>
+                if (!SkipPostgreSqlDbContextRegistration)
                 {
-                    if (options.ExistingConnection != null)
+                    //配置PostgreSql数据库
+                    Configuration.Modules.AbpEfCore().AddDbContext<JPGZServicePostgreSqlDbContext>(options =>
                     {
-                        JPGZServiceMysqlDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
-                    }
-                    else
-                    {
-                        JPGZServiceMysqlDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                    }
-                });
-
-                //配置PostgreSql数据库
-                Configuration.Modules.AbpEfCore().AddDbContext<JPGZServicePostgreSqlDbContext>(options =>
-                {
-                    if (options.ExistingConnection != null)
-                    {
-                        JPGZServicePostgreSqlDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
-                    }
-                    else
-                    {
-                        JPGZServicePostgreSqlDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                    }
-                });
+                        if (options.ExistingConnection != null)
+                        {
+                            JPGZServicePostgreSqlDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
+                        }
+                        else
+                        {
+                            JPGZServicePostgreSqlDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
+                        }
+                    });
+                } 
             }
         }
 

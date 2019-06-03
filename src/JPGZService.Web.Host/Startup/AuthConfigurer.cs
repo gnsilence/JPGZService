@@ -13,7 +13,7 @@ namespace JPGZService.Web.Host.Startup
     public static class AuthConfigurer
     {
         /// <summary>
-        /// 设置identityserver
+        /// 设置identityserver4
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -28,7 +28,7 @@ namespace JPGZService.Web.Host.Startup
                 }).AddJwtBearer("JwtBearer", options =>
                 {
                     options.Audience = configuration["Authentication:JwtBearer:Audience"];
-                    options.Authority = "http://47.105.185.242:5001";
+                    options.Authority = configuration["Authentication:JwtBearer:Authority"];
                     options.RequireHttpsMetadata = false;
                     options.IncludeErrorDetails = true;
                     //设置验证参数
@@ -39,7 +39,7 @@ namespace JPGZService.Web.Host.Startup
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Authentication:JwtBearer:SecurityKey"])),
 
                         // Validate the JWT Issuer (iss) claim
-                        ValidateIssuer = false,
+                        ValidateIssuer = true,
                         ValidIssuer = configuration["Authentication:JwtBearer:Issuer"],
 
                         // Validate the JWT Audience (aud) claim

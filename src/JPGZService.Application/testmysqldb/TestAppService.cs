@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Net.Mail;
 using Abp.Configuration;
+using JPGZService.AppConfigurtaionServices;
 
 namespace JPGZService.testmysqldb
 {
@@ -20,7 +21,9 @@ namespace JPGZService.testmysqldb
         private readonly IRepository<Person> _personRepository;
 
         private readonly IRepository<Animal> _animalRepository;
-
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
         private readonly IEmailSender _emailSender;
         //使用redis缓存
         private ICacheManager _cacheManager { get; set; }
@@ -28,15 +31,22 @@ namespace JPGZService.testmysqldb
         /// 使用实体缓存，通过automapper实现
         /// </summary>
         private readonly IPersonCache _personCache;
-
+        /// <summary>
+        /// 获取设置信息
+        /// </summary>
         private readonly ISettingManager _settingManager;
+        /// <summary>
+        /// 获取配置文件信息
+        /// </summary>
+        private readonly AppConfigurtaionService _appConfigurtaionService;
         public TestAppService(
             IRepository<Person> personRepository,
             IRepository<Animal> animalRepository,
             ICacheManager cacheManager,
             IPersonCache personCache,
             IEmailSender emailSender,
-            ISettingManager settingManager
+            ISettingManager settingManager,
+            AppConfigurtaionService appConfigurtaionService
         )
         {
             _personRepository = personRepository;
@@ -45,6 +55,7 @@ namespace JPGZService.testmysqldb
             _personCache = personCache;
             _emailSender = emailSender;
             _settingManager = settingManager;
+            _appConfigurtaionService = appConfigurtaionService;
         }
         /// <summary>
         /// 测试计划任务(httpjob)
@@ -52,7 +63,14 @@ namespace JPGZService.testmysqldb
         /// <param name="minutes">多少分钟后执行</param>
         public void AddJobTest(int minutes)
         {
-            var job = new Hangfire.HttpJob.Server.HttpJobItem()
+            // 获取配置信息方式一，通过配置管理器
+
+            var deminutes= Convert.ToInt32(_settingManager.GetSettingValue("config.defaultMinutes"));
+
+            //获取配置信息方式二，通过配置文件接口获取
+            var deminutes2 = Convert.ToInt32(_appConfigurtaionService.AppConfigurations.defaultMinutes);
+
+            var job = new HttpJobItem()
             {
                 JobName = "PlanJob",
                 QueueName = "apis",
@@ -60,7 +78,7 @@ namespace JPGZService.testmysqldb
                 Url = "https://www.baidu.com",
                 IsRetry = false,
                 Corn = "",
-                DelayFromMinutes = minutes
+                DelayFromMinutes = minutes>0?minutes:deminutes
             };
 
             BackgroundJob.Schedule(() => HttpJob.Excute(job, job.JobName, job.QueueName, job.IsRetry, null), TimeSpan.FromMinutes(job.DelayFromMinutes));
@@ -78,7 +96,7 @@ namespace JPGZService.testmysqldb
         /// </summary>
         public void AddReJob()
         {
-            var job = new Hangfire.HttpJob.Server.HttpJobItem()
+            var job = new HttpJobItem()
             {
                 JobName = "ReJob",
                 QueueName = "apis",
@@ -93,10 +111,10 @@ namespace JPGZService.testmysqldb
         }
 
         /// <summary>
-        /// 测试授权验证(identityserver4)数据来自postgresql
+        /// 测试授权,基于identityserver4的授权和角色验证(需要为用户添加此角色才能访问方法,id4登录管理员端为用户分配角色权限)
         /// </summary>
         /// <returns>名称</returns>
-        [Authorize]
+        [Authorize(Roles = "superAdmin")]
         public List<string> GetAnimals()
         {
             var animalnames = _animalRepository.GetAll().Select(p => p.Name).ToList();
@@ -109,22 +127,6 @@ namespace JPGZService.testmysqldb
         public List<string> GetPeople()
         {
             var peopleNames = _personRepository.GetAllList().Select(p => p.PersonName).ToList();
-            var ss = _settingManager.GetSettingValue("Abp.Net.Mail.Smtp.Host");
-            try
-            {
-                
-         _emailSender.SendAsync(
-               subject:"22222222222222",
-               to: "592254126@qq.com",
-               body: "A new task is assigned for you: <b>{task.Title}</b>",
-               isBodyHtml: true
-               );
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
             return peopleNames;
         }
         /// <summary>
@@ -133,7 +135,9 @@ namespace JPGZService.testmysqldb
         /// <returns></returns>
         public async Task<List<Person>> GetPersonsByRedisCache()
         {
-            return await _cacheManager.GetCache("mycache").GetAsync("getallpersons", () => _personRepository.GetAllListAsync());
+            return await _cacheManager
+                .GetCache("mycache")
+                .GetAsync("getallpersons", () => _personRepository.GetAllListAsync());
         }
         /// <summary>
         /// 通过id获取名称(使用EntityCache),支持通过id获取
@@ -143,6 +147,28 @@ namespace JPGZService.testmysqldb
         public async Task<GetPersonNameDto> GetPersonNameByEntityCache(int id)
         {
             return await _personCache.GetAsync(id);
+        }
+        /// <summary>
+        /// 使用emailsender发送邮件示例(需要授权和分配发送邮件的角色权限)
+        /// </summary>
+        [Authorize(Roles = "sendEmail")]
+        public void SendEmail(EmalSendDto emalSendInput)
+        {
+            try
+            {
+                _emailSender.SendAsync
+                    (
+                    subject: emalSendInput.Subject,
+                    to: emalSendInput.SendTo,
+                    body: emalSendInput.Content,
+                    isBodyHtml: true
+                    );
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }
