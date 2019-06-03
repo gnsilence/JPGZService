@@ -2696,3 +2696,148 @@ INFO  2019-06-03 16:53:23,848 [ion:1] .Mvc.Infrastructure.ObjectResultExecutor -
 INFO  2019-06-03 16:53:23,889 [ion:1] ore.Mvc.Internal.ControllerActionInvoker - Executed action JPGZService.testmysqldb.TestAppService.GetPersonsByRedisCache (JPGZService.Application) in 3978.634ms
 INFO  2019-06-03 16:53:23,900 [ion:1] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 4095.1149ms 200 application/json; charset=utf-8
 INFO  2019-06-03 16:57:53,002 [og #1] Hangfire.Server.ServerWatchdog           - 1 servers were removed due to timeout
+DEBUG 2019-06-03 17:11:34,856 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2019-06-03 17:11:34,981 [1    ] Abp.Modules.AbpModuleManager             - Found 14 ABP modules in total.
+DEBUG 2019-06-03 17:11:34,994 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.Web.Host.Startup.JPGZServiceWebHostModule, JPGZService.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:34,998 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.JPGZServiceWebCoreModule, JPGZService.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:34,999 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.JPGZServiceApplicationModule, JPGZService.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:34,999 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.JPGZServiceCoreModule, JPGZService.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,000 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,000 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,001 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.EntityFrameworkCore.JPGZServiceEntityFrameworkModule, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,002 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,002 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,002 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,003 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,003 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Runtime.Caching.Redis.AbpRedisCacheModule, Abp.RedisCache, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,003 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.MailKit.AbpMailKitModule, Abp.MailKit, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,003 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,008 [1    ] Abp.Modules.AbpModuleManager             - 14 modules loaded.
+DEBUG 2019-06-03 17:11:35,612 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: JPGZService.EntityFrameworkCore.JPGZServiceDbContext, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,648 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: JPGZService.EntityFrameworkCore.JPGZServiceMysqlDbContext, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,657 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: JPGZService.EntityFrameworkCore.JPGZServicePostgreSqlDbContext, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:11:35,776 [1    ] Abp.Localization.LocalizationManager     - Initializing 2 localization sources.
+DEBUG 2019-06-03 17:11:35,869 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2019-06-03 17:11:35,906 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2019-06-03 17:11:36,314 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2019-06-03 17:11:36,380 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 2 classes define auto mapping attributes
+DEBUG 2019-06-03 17:11:36,381 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - JPGZService.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2019-06-03 17:11:36,388 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - JPGZService.testmysqldb.Dto.GetPersonNameDto
+INFO  2019-06-03 17:11:36,945 [1    ] Hangfire.BackgroundJobServer             - Starting Hangfire Server using job storage: 'redis://127.0.0.1:6379,syncTimeout=10000,allowAdmin=True,password=123456/0'
+INFO  2019-06-03 17:11:36,949 [1    ] Hangfire.BackgroundJobServer             - Using the following options for Redis job storage:
+INFO  2019-06-03 17:11:36,955 [1    ] Hangfire.BackgroundJobServer             - ConnectionString: 127.0.0.1:6379,syncTimeout=10000,allowAdmin=True,password=123456
+DN: 0
+INFO  2019-06-03 17:11:36,959 [1    ] Hangfire.BackgroundJobServer             - Using the following options for Hangfire Server:
+    Worker count: 40
+    Listening queues: 'default', 'apis', 'apitest', 'oders', 'plans', 'rejobs', 'percounts'
+    Shutdown timeout: 00:30:00
+    Schedule polling interval: 00:00:01
+INFO  2019-06-03 17:11:37,102 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server desktop-d3nevnf:25092:bc7a48e3 successfully announced in 45.206 ms
+INFO  2019-06-03 17:11:37,121 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server desktop-d3nevnf:25092:bc7a48e3 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, FetchedJobsWatcher, ExpiredJobsWatcher, RedisSubscription, Worker, DelayedJobScheduler, RecurringJobScheduler...
+INFO  2019-06-03 17:11:37,282 [og #1] Hangfire.Server.ServerWatchdog           - 1 servers were removed due to timeout
+INFO  2019-06-03 17:11:37,296 [er #1] Hangfire.Redis.ExpiredJobsWatcher        - Removing expired records from the 'succeeded' list...
+INFO  2019-06-03 17:11:38,150 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server desktop-d3nevnf:25092:bc7a48e3 all the dispatchers started
+INFO  2019-06-03 17:11:40,042 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21022/  0
+INFO  2019-06-03 17:11:40,046 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21022/  
+INFO  2019-06-03 17:11:40,171 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 137.4014ms 200 
+WARN  2019-06-03 17:11:40,330 [6    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:11:40,335 [6    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+WARN  2019-06-03 17:11:40,659 [ion:1] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:11:40,663 [ion:1] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:11:40,668 [ion:1] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:11:40,672 [ion:1] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+INFO  2019-06-03 17:11:41,283 [ion:1] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host)
+INFO  2019-06-03 17:11:41,616 [ion:1] ore.Mvc.Internal.ControllerActionInvoker - Executing action method JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host) - Validation state: Valid
+INFO  2019-06-03 17:11:41,627 [ion:1] ore.Mvc.Internal.ControllerActionInvoker - Executed action method JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 3.564ms.
+INFO  2019-06-03 17:11:41,657 [ion:1] Abp.Auditing.SimpleLogAuditingStore      - AUDIT LOG: JPGZService.Web.Host.Controllers.HomeController.Index is executed by an anonymous user in 214 ms from ::1 IP address with succeed.
+INFO  2019-06-03 17:11:41,688 [ion:1] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2019-06-03 17:11:41,715 [ion:1] ore.Mvc.Internal.ControllerActionInvoker - Executed action JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host) in 415.1009ms
+INFO  2019-06-03 17:11:41,741 [ion:1] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1711.1849ms 302 
+INFO  2019-06-03 17:11:41,754 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21022/swagger/index.html  
+WARN  2019-06-03 17:11:41,761 [7    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:11:41,766 [7    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+WARN  2019-06-03 17:11:41,788 [ion:3] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:11:41,795 [ion:3] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:11:41,803 [ion:3] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:11:41,811 [ion:3] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+INFO  2019-06-03 17:11:41,960 [ion:3] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 208.0096ms 200 text/html
+INFO  2019-06-03 17:11:42,505 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21022/swagger/v1/swagger.json  
+WARN  2019-06-03 17:11:42,510 [6    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:11:42,515 [6    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+WARN  2019-06-03 17:11:42,523 [ion:6] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:11:42,527 [ion:6] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:11:42,532 [ion:6] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:11:42,539 [ion:6] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+INFO  2019-06-03 17:11:42,787 [ion:6] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 283.0885ms 200 application/json;charset=utf-8
+DEBUG 2019-06-03 17:21:16,754 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2019-06-03 17:21:16,893 [1    ] Abp.Modules.AbpModuleManager             - Found 14 ABP modules in total.
+DEBUG 2019-06-03 17:21:16,918 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.Web.Host.Startup.JPGZServiceWebHostModule, JPGZService.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,923 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.JPGZServiceWebCoreModule, JPGZService.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,923 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.JPGZServiceApplicationModule, JPGZService.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,924 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.JPGZServiceCoreModule, JPGZService.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,924 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,924 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,925 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: JPGZService.EntityFrameworkCore.JPGZServiceEntityFrameworkModule, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,925 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,925 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,926 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,926 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,926 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Runtime.Caching.Redis.AbpRedisCacheModule, Abp.RedisCache, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,927 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.MailKit.AbpMailKitModule, Abp.MailKit, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,928 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:16,933 [1    ] Abp.Modules.AbpModuleManager             - 14 modules loaded.
+DEBUG 2019-06-03 17:21:17,550 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: JPGZService.EntityFrameworkCore.JPGZServiceDbContext, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:17,574 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: JPGZService.EntityFrameworkCore.JPGZServiceMysqlDbContext, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:17,583 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: JPGZService.EntityFrameworkCore.JPGZServicePostgreSqlDbContext, JPGZService.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2019-06-03 17:21:17,734 [1    ] Abp.Localization.LocalizationManager     - Initializing 2 localization sources.
+DEBUG 2019-06-03 17:21:17,821 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2019-06-03 17:21:17,853 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2019-06-03 17:21:18,353 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2019-06-03 17:21:18,414 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 2 classes define auto mapping attributes
+DEBUG 2019-06-03 17:21:18,414 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - JPGZService.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2019-06-03 17:21:18,422 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - JPGZService.testmysqldb.Dto.GetPersonNameDto
+INFO  2019-06-03 17:21:19,053 [1    ] Hangfire.BackgroundJobServer             - Starting Hangfire Server using job storage: 'redis://127.0.0.1:6379,syncTimeout=10000,allowAdmin=True,password=123456/0'
+INFO  2019-06-03 17:21:19,056 [1    ] Hangfire.BackgroundJobServer             - Using the following options for Redis job storage:
+INFO  2019-06-03 17:21:19,059 [1    ] Hangfire.BackgroundJobServer             - ConnectionString: 127.0.0.1:6379,syncTimeout=10000,allowAdmin=True,password=123456
+DN: 0
+INFO  2019-06-03 17:21:19,062 [1    ] Hangfire.BackgroundJobServer             - Using the following options for Hangfire Server:
+    Worker count: 40
+    Listening queues: 'default', 'apis', 'apitest', 'oders', 'plans', 'rejobs', 'percounts'
+    Shutdown timeout: 00:30:00
+    Schedule polling interval: 00:00:01
+INFO  2019-06-03 17:21:19,186 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server desktop-d3nevnf:24952:fb05d991 successfully announced in 50.5912 ms
+INFO  2019-06-03 17:21:19,203 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server desktop-d3nevnf:24952:fb05d991 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, FetchedJobsWatcher, ExpiredJobsWatcher, RedisSubscription, Worker, DelayedJobScheduler, RecurringJobScheduler...
+INFO  2019-06-03 17:21:19,291 [er #1] Hangfire.Redis.ExpiredJobsWatcher        - Removing expired records from the 'succeeded' list...
+INFO  2019-06-03 17:21:19,867 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server desktop-d3nevnf:24952:fb05d991 all the dispatchers started
+INFO  2019-06-03 17:21:21,624 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21022/  0
+INFO  2019-06-03 17:21:21,628 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21022/  
+INFO  2019-06-03 17:21:21,770 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 145.6048ms 200 
+WARN  2019-06-03 17:21:21,913 [7    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:21:21,917 [7    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+WARN  2019-06-03 17:21:22,260 [ion:8] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:21:22,264 [ion:8] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:21:22,281 [ion:8] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:21:22,285 [ion:8] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+INFO  2019-06-03 17:21:22,862 [ion:8] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host)
+INFO  2019-06-03 17:21:23,180 [ion:8] ore.Mvc.Internal.ControllerActionInvoker - Executing action method JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host) - Validation state: Valid
+INFO  2019-06-03 17:21:23,191 [ion:8] ore.Mvc.Internal.ControllerActionInvoker - Executed action method JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 3.3068ms.
+INFO  2019-06-03 17:21:23,222 [ion:8] Abp.Auditing.SimpleLogAuditingStore      - AUDIT LOG: JPGZService.Web.Host.Controllers.HomeController.Index is executed by an anonymous user in 212 ms from ::1 IP address with succeed.
+INFO  2019-06-03 17:21:23,253 [ion:8] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2019-06-03 17:21:23,274 [ion:8] ore.Mvc.Internal.ControllerActionInvoker - Executed action JPGZService.Web.Host.Controllers.HomeController.Index (JPGZService.Web.Host) in 402.3678ms
+INFO  2019-06-03 17:21:23,306 [ion:8] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1681.2732ms 302 
+INFO  2019-06-03 17:21:23,312 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21022/swagger/index.html  
+WARN  2019-06-03 17:21:23,319 [28   ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:21:23,324 [28   ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+WARN  2019-06-03 17:21:23,331 [ion:1] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:21:23,335 [ion:1] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:21:23,339 [ion:1] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:21:23,343 [ion:1] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+INFO  2019-06-03 17:21:23,490 [ion:1] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 178.0698ms 200 text/html
+INFO  2019-06-03 17:21:23,764 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21022/swagger/v1/swagger.json  
+WARN  2019-06-03 17:21:23,791 [7    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:21:23,830 [7    ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+WARN  2019-06-03 17:21:23,842 [29   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:21:23,851 [29   ] calization.RequestLocalizationMiddleware - AcceptLanguageHeaderRequestCultureProvider returned the following unsupported UI Cultures 'zh-CN, zh'.
+WARN  2019-06-03 17:21:23,858 [29   ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported cultures 'zh'.
+WARN  2019-06-03 17:21:23,869 [29   ] calization.RequestLocalizationMiddleware - CookieRequestCultureProvider returned the following unsupported UI Cultures 'zh'.
+INFO  2019-06-03 17:21:24,328 [29   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 563.389ms 200 application/json;charset=utf-8

@@ -59,6 +59,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="wwwroot\UploadFile\Video\" />
     <Folder Include="wwwroot\Upload\images\UserPhoto\" />
   </ItemGroup>
   <ItemGroup>
