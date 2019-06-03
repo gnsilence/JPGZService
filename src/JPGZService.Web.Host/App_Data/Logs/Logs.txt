@@ -2695,3 +2695,4 @@ INFO  2019-06-03 16:53:23,810 [ion:1] Abp.Auditing.SimpleLogAuditingStore      -
 INFO  2019-06-03 16:53:23,848 [ion:1] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
 INFO  2019-06-03 16:53:23,889 [ion:1] ore.Mvc.Internal.ControllerActionInvoker - Executed action JPGZService.testmysqldb.TestAppService.GetPersonsByRedisCache (JPGZService.Application) in 3978.634ms
 INFO  2019-06-03 16:53:23,900 [ion:1] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 4095.1149ms 200 application/json; charset=utf-8
+INFO  2019-06-03 16:57:53,002 [og #1] Hangfire.Server.ServerWatchdog           - 1 servers were removed due to timeout
