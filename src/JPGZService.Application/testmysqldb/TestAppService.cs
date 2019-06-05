@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using Abp.Net.Mail;
 using Abp.Configuration;
 using JPGZService.AppConfigurtaionServices;
+using JPGZService.SqlServertestModel;
+using JPGZService.IRepositories;
+using Abp.Domain.Uow;
 
 namespace JPGZService.testmysqldb
 {
@@ -21,6 +24,8 @@ namespace JPGZService.testmysqldb
         private readonly IRepository<Person> _personRepository;
 
         private readonly IRepository<Animal> _animalRepository;
+
+        private readonly INewsRepository _newsrepository;
         /// <summary>
         /// 发送邮件
         /// </summary>
@@ -46,7 +51,8 @@ namespace JPGZService.testmysqldb
             IPersonCache personCache,
             IEmailSender emailSender,
             ISettingManager settingManager,
-            AppConfigurtaionService appConfigurtaionService
+            AppConfigurtaionService appConfigurtaionService,
+            INewsRepository newsrepository
         )
         {
             _personRepository = personRepository;
@@ -56,6 +62,7 @@ namespace JPGZService.testmysqldb
             _emailSender = emailSender;
             _settingManager = settingManager;
             _appConfigurtaionService = appConfigurtaionService;
+            _newsrepository = newsrepository;
         }
         /// <summary>
         /// 测试计划任务(httpjob)
@@ -65,7 +72,7 @@ namespace JPGZService.testmysqldb
         {
             // 获取配置信息方式一，通过配置管理器
 
-            var deminutes= Convert.ToInt32(_settingManager.GetSettingValue("config.defaultMinutes"));
+            var deminutes = Convert.ToInt32(_settingManager.GetSettingValue("config.defaultMinutes"));
 
             //获取配置信息方式二，通过配置文件接口获取
             var deminutes2 = Convert.ToInt32(_appConfigurtaionService.AppConfigurations.defaultMinutes);
@@ -78,7 +85,7 @@ namespace JPGZService.testmysqldb
                 Url = "https://www.baidu.com",
                 IsRetry = false,
                 Corn = "",
-                DelayFromMinutes = minutes>0?minutes:deminutes
+                DelayFromMinutes = minutes > 0 ? minutes : deminutes
             };
 
             BackgroundJob.Schedule(() => HttpJob.Excute(job, job.JobName, job.QueueName, job.IsRetry, null), TimeSpan.FromMinutes(job.DelayFromMinutes));
@@ -169,6 +176,20 @@ namespace JPGZService.testmysqldb
 
                 throw;
             }
+        }
+        /// <summary>
+        /// 测试freesql模块
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllNewsTitle()
+        {
+            var titleslist = _newsrepository.GetAll().Select(p => p.Ntitle).ToList();
+            var getentity = _newsrepository.Get(24);
+            getentity.Ncontent = "下雨了";
+            //使用sql语句查询结果，仅继承freesql可以使用
+            var sqlentity = _newsrepository.GetEntityBySql();
+            //var entity = _newsrepository.Update(getentity);
+            return titleslist;
         }
     }
 }

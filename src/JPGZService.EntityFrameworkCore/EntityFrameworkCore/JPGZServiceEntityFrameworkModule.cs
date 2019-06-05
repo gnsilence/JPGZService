@@ -4,12 +4,18 @@ using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
+using ABP.FreeSqlSqlserver.ABPFreeSql;
+using ABP.FreeSqlSqlserver.Configuration.Startup;
+using JPGZService.Configuration;
+using JPGZService.Web;
+using Microsoft.Extensions.Configuration;
 
 namespace JPGZService.EntityFrameworkCore
 {
     [DependsOn(
         typeof(JPGZServiceCoreModule),
-        typeof(AbpEntityFrameworkCoreModule))]
+        typeof(AbpEntityFrameworkCoreModule),
+        typeof(AbpFreesqlModule))]
     public class JPGZServiceEntityFrameworkModule : AbpModule
     {
         /* Used it tests to skip dbcontext registration, in order to use in-memory database of EF Core */
@@ -20,11 +26,11 @@ namespace JPGZService.EntityFrameworkCore
         /// <summary>
         /// SkipRegister MysqlContext
         /// </summary>
-        public bool SkipMysqlDbContextRegistration { get; set; }
+        public bool SkipMysqlDbContextRegistration { get; set; } = false;
         /// <summary>
         /// Skip postSqlContext
         /// </summary>
-        public bool SkipPostgreSqlDbContextRegistration { get; set; }
+        public bool SkipPostgreSqlDbContextRegistration { get; set; } = false;
         /// <summary>
         /// skip seed initdata
         /// </summary>
@@ -33,6 +39,8 @@ namespace JPGZService.EntityFrameworkCore
         public override void PreInitialize()
         {
             Configuration.ReplaceService<IConnectionStringResolver, MyConnectionStringResolver>();
+            //使用freeSql模块
+            Configuration.Modules.AbpFreeSql().ConnectionString = GetConnectionString();
 
             if (!SkipDbContextRegistration)
             {
@@ -88,7 +96,15 @@ namespace JPGZService.EntityFrameworkCore
         {
             IocManager.RegisterAssemblyByConvention(typeof(JPGZServiceEntityFrameworkModule).GetAssembly());
         }
-
+        /// <summary>
+        /// 获取数据库连接
+        /// </summary>
+        /// <returns></returns>
+        private string GetConnectionString()
+        {
+            var configuration = AppConfigurations.Get(WebContentDirectoryFinder.CalculateContentRootFolder());
+            return configuration.GetConnectionString(JPGZServiceConsts.ConnectionStringName);
+        }
         public override void PostInitialize()
         {
             if (!SkipDbSeed)

@@ -1,4 +1,5 @@
-﻿using JPGZService.testmysqldb.Dto;
+﻿using Abp.Application.Services;
+using JPGZService.testmysqldb.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JPGZService.testmysqldb
 {
-  public  interface ITestAppService
+  public  interface ITestAppService: IApplicationService
     {
         List<string> GetPeople();
         List<string> GetAnimals();
@@ -22,5 +23,7 @@ namespace JPGZService.testmysqldb
         Task<GetPersonNameDto> GetPersonNameByEntityCache(int id);
 
         void SendEmail(EmalSendDto emalSendDto);
+
+        List<string> GetAllNewsTitle();
     }
 }

@@ -17,6 +17,7 @@
     <DocumentationFile>E:\西安驾培公众平台\项目源码\驾培公众平台\后端源码\JPGZService\src\JPGZService.Application\JPGZService.Application.xml</DocumentationFile>
     <OutputPath>bin\Debug\netcoreapp2.0\</OutputPath>
     <NoWarn>1701;1702;1591</NoWarn>
+    <WarningLevel>2</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="ClassInfos\**" />

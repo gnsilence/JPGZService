@@ -13,6 +13,8 @@ using JPGZService.Configuration;
 using JPGZService.EntityFrameworkCore;
 using Abp.Runtime.Caching.Redis;
 using Abp.MailKit;
+using ABP.FreeSqlSqlserver;
+using ABP.FreeSqlSqlserver.Configuration.Startup;
 
 #if FEATURE_SIGNALR
 using Abp.Web.SignalR;
@@ -81,7 +83,6 @@ namespace JPGZService
                  .CreateControllersForAppServices(
                      typeof(JPGZServiceApplicationModule).GetAssembly()
                  );
-
             ConfigureTokenAuth();
         }
 
