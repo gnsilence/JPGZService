@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\fresqlext\FreeSql.Connection.Extensions\FreeSql.Connection.Extensions\FreeSql.Connection.Extensions.csproj" />
+    <ProjectReference Include="..\FreeSql.Connection.Extensions\FreeSql.Connection.Extensions.csproj" />
   </ItemGroup>
 
 </Project>
