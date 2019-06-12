@@ -2,6 +2,7 @@
 using Abp.Domain.Uow;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Configuration;
+using Abp.FreeSqlExtensions.FreeSqlExt;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using ABP.FreeSqlSqlserver.ABPFreeSql;
@@ -15,7 +16,8 @@ namespace JPGZService.EntityFrameworkCore
     [DependsOn(
         typeof(JPGZServiceCoreModule),
         typeof(AbpEntityFrameworkCoreModule),
-        typeof(AbpFreesqlModule))]
+        typeof(AbpFreesqlModule),
+        typeof(AbpFreeSqlExtensionsModule))]
     public class JPGZServiceEntityFrameworkModule : AbpModule
     {
         /* Used it tests to skip dbcontext registration, in order to use in-memory database of EF Core */

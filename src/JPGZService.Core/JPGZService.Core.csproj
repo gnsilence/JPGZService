@@ -25,6 +25,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Abp.FreeSqlExtensions\Abp.FreeSqlExtensions.csproj" />
     <ProjectReference Include="..\ABP.FreeSql\ABP.FreeSqlSqlserver.csproj" />
   </ItemGroup>
 </Project>

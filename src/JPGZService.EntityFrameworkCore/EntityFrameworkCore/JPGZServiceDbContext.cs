@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Abp.EntityFrameworkCore;
+using JPGZService.SqlServertestModel;
 
 namespace JPGZService.EntityFrameworkCore
 {
@@ -38,5 +39,7 @@ namespace JPGZService.EntityFrameworkCore
             //});
             base.OnModelCreating(modelBuilder);
         }
+
+        public virtual DbSet<News> News { get; set; }
     }
 }

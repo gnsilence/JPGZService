@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JPGZService.EntityFramework
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ABP.FreeSqlSqlserver", "src\ABP.FreeSql\ABP.FreeSqlSqlserver.csproj", "{B7DED884-3C9A-48F7-BE04-7C89E6660DFF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.FreeSqlExtensions", "Abp.FreeSqlExtensions\Abp.FreeSqlExtensions.csproj", "{E255BE66-0629-4010-8D8F-9C9731241233}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeSql.Connection.Extensions", "..\..\fresqlext\FreeSql.Connection.Extensions\FreeSql.Connection.Extensions\FreeSql.Connection.Extensions.csproj", "{25A3EC50-7D23-43CD-A255-86B8D92783F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,14 @@ Global
 		{B7DED884-3C9A-48F7-BE04-7C89E6660DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7DED884-3C9A-48F7-BE04-7C89E6660DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7DED884-3C9A-48F7-BE04-7C89E6660DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E255BE66-0629-4010-8D8F-9C9731241233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E255BE66-0629-4010-8D8F-9C9731241233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E255BE66-0629-4010-8D8F-9C9731241233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E255BE66-0629-4010-8D8F-9C9731241233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A3EC50-7D23-43CD-A255-86B8D92783F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25A3EC50-7D23-43CD-A255-86B8D92783F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A3EC50-7D23-43CD-A255-86B8D92783F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25A3EC50-7D23-43CD-A255-86B8D92783F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +86,8 @@ Global
 		{22CFE0D2-8DCA-42D7-AD7D-784C3862493F} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 		{E0580562-F8F2-4EBB-B07A-ABFC6F2C314F} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 		{B7DED884-3C9A-48F7-BE04-7C89E6660DFF} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
+		{E255BE66-0629-4010-8D8F-9C9731241233} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
+		{25A3EC50-7D23-43CD-A255-86B8D92783F3} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB1D6178-7A73-4A1D-BDF2-F92DCCE61EF5}

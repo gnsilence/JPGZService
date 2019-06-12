@@ -18,6 +18,12 @@ namespace JPGZService.EntityFrameworkCore
 
         public override string GetNameOrConnectionString(ConnectionStringResolveArgs args)
         {
+            // if SqlServer 
+            if (args["DbContextConcreteType"] as Type == typeof(JPGZServiceDbContext))
+            {
+                var configuration = AppConfigurations.Get(WebContentDirectoryFinder.CalculateContentRootFolder());
+                return configuration.GetConnectionString(JPGZServiceConsts.ConnectionStringName);
+            }
             // if mysql
             if (args["DbContextConcreteType"] as Type == typeof(JPGZServiceMysqlDbContext))
             {

@@ -16,6 +16,7 @@ using JPGZService.AppConfigurtaionServices;
 using JPGZService.SqlServertestModel;
 using JPGZService.IRepositories;
 using Abp.Domain.Uow;
+using Abp.FreeSqlExtensions.FreeSqlExt.Repositories;
 
 namespace JPGZService.testmysqldb
 {
@@ -24,6 +25,12 @@ namespace JPGZService.testmysqldb
         private readonly IRepository<Person> _personRepository;
 
         private readonly IRepository<Animal> _animalRepository;
+
+        private readonly IFreeSqlRepository<News> _freeSqlRepository;
+
+        private readonly IFreeSqlRepository<Person> _fpersonRepository;
+
+        private readonly IFreeSqlRepository<Animal> _fanimalRepository;
 
         private readonly INewsRepository _newsrepository;
         /// <summary>
@@ -52,7 +59,10 @@ namespace JPGZService.testmysqldb
             IEmailSender emailSender,
             ISettingManager settingManager,
             AppConfigurtaionService appConfigurtaionService,
-            INewsRepository newsrepository
+            INewsRepository newsrepository,
+            IFreeSqlRepository<News> freeSqlRepository,
+            IFreeSqlRepository<Person> fpersonRepository,
+            IFreeSqlRepository<Animal> fanimalRepository
         )
         {
             _personRepository = personRepository;
@@ -63,6 +73,9 @@ namespace JPGZService.testmysqldb
             _settingManager = settingManager;
             _appConfigurtaionService = appConfigurtaionService;
             _newsrepository = newsrepository;
+            _freeSqlRepository = freeSqlRepository;
+            _fpersonRepository = fpersonRepository;
+            _fanimalRepository = fanimalRepository;
         }
         /// <summary>
         /// 测试计划任务(httpjob)
@@ -124,7 +137,11 @@ namespace JPGZService.testmysqldb
         [Authorize(Roles = "superAdmin")]
         public List<string> GetAnimals()
         {
-            var animalnames = _animalRepository.GetAll().Select(p => p.Name).ToList();
+
+            //_fanimalRepository.Delete(ainiaml);
+
+            //_fanimalRepository.Delete(p=>p.Id==22);
+            var animalnames = _fanimalRepository.GetAll().Select(p => p.Name).ToList();
             return animalnames;
         }
         /// <summary>
@@ -133,7 +150,12 @@ namespace JPGZService.testmysqldb
         /// <returns>名称</returns>
         public List<string> GetPeople()
         {
-            var peopleNames = _personRepository.GetAllList().Select(p => p.PersonName).ToList();
+            var entity = new Person()
+            {
+                PersonName = "张锋"
+            };
+            var eny = _fpersonRepository.InsertAndGetEntityAsync(entity);
+            var peopleNames = _fpersonRepository.GetAll().Select(p => p.PersonName).ToList();
             return peopleNames;
         }
         /// <summary>
@@ -158,7 +180,7 @@ namespace JPGZService.testmysqldb
         /// <summary>
         /// 使用emailsender发送邮件示例(需要授权和分配发送邮件的角色权限)
         /// </summary>
-        [Authorize(Roles = "sendEmail")]
+        [Authorize(Roles = "sendEmail,superAdmin")]
         public void SendEmail(EmalSendDto emalSendInput)
         {
             try
@@ -183,12 +205,18 @@ namespace JPGZService.testmysqldb
         /// <returns></returns>
         public List<string> GetAllNewsTitle()
         {
+            //var list = _freeSqlRepository.Query<News>("").Select(p=>p.Ntitle).ToList();
+            //var personlist = _fpersonRepository.GetAll().Select(p=>p.PersonName).ToList();
             var titleslist = _newsrepository.GetAll().Select(p => p.Ntitle).ToList();
-            var getentity = _newsrepository.Get(24);
-            getentity.Ncontent = "下雨了";
-            //使用sql语句查询结果，仅继承freesql可以使用
-            var sqlentity = _newsrepository.GetEntityBySql();
+            //var getentity = _newsrepository.Get(24);
+            //getentity.Ncontent = "下雨了";
+            ////使用sql语句查询结果，仅继承freesql可以使用
+            //var sqlentity = _newsrepository.GetEntityBySql();
             //var entity = _newsrepository.Update(getentity);
+
+            //测试postgresql
+
+            //var postsqllist = _fanimalRepository.GetAll().Select(p => p.Name).ToList();
             return titleslist;
         }
     }
