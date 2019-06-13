@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace JPGZService.Interceptors
 {
     /// <summary>
-    /// 拦截异步方法
+    /// 拦截异步方法(由于通过接口调用所以拦截的方法必须为虚方法)
     /// </summary>
     public class ServiceAsyncInterceptor : IInterceptor
     {

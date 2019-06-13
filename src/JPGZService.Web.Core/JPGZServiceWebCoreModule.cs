@@ -15,6 +15,11 @@ using Abp.Runtime.Caching.Redis;
 using Abp.MailKit;
 using ABP.FreeSqlSqlserver;
 using ABP.FreeSqlSqlserver.Configuration.Startup;
+using Abp.Web.Api.ProxyScripting.Generators;
+using Microsoft.AspNetCore.Mvc.Internal;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc;
 
 #if FEATURE_SIGNALR
 using Abp.Web.SignalR;
@@ -82,7 +87,25 @@ namespace JPGZService
             Configuration.Modules.AbpAspNetCore()
                  .CreateControllersForAppServices(
                      typeof(JPGZServiceApplicationModule).GetAssembly()
-                 );
+                 ).// 自定义路由格式，默认为/api/services/app/Controller.ControllerName/action.ActionName/
+                 ConfigureControllerModel(model =>
+                 {
+                     foreach (var action in model.Actions)
+                     {
+                         var verb = ProxyScriptingHelper.GetConventionalVerbForMethodName(action.ActionName);
+                         var constraint = new HttpMethodActionConstraint(new List<string> { verb });
+
+                         foreach (var selector in action.Selectors)
+                         {
+                             selector.ActionConstraints.Add(constraint);
+                             selector.AttributeRouteModel = new AttributeRouteModel(
+                                 new RouteAttribute(
+                                     $"api/{action.Controller.ControllerName}/{action.ActionName}"
+                                 )
+                             );
+                         }
+                     }
+                 }); ;
             ConfigureTokenAuth();
         }
 

@@ -81,7 +81,7 @@ namespace JPGZService.testmysqldb
         /// 测试计划任务(httpjob)
         /// </summary>
         /// <param name="minutes">多少分钟后执行</param>
-        public void AddJobTest(int minutes)
+        public virtual void AddJobTest(int minutes)
         {
             // 获取配置信息方式一，通过配置管理器
 
@@ -135,7 +135,7 @@ namespace JPGZService.testmysqldb
         /// </summary>
         /// <returns>名称</returns>
         [Authorize(Roles = "superAdmin")]
-        public List<string> GetAnimals()
+        public virtual List<string> GetAnimals()
         {
 
             //_fanimalRepository.Delete(ainiaml);

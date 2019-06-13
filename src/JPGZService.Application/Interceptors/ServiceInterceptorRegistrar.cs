@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Dependency;
 using Castle.Core;
 using Castle.MicroKernel;
 using System;
@@ -10,9 +11,9 @@ namespace JPGZService.Interceptors
     //注册拦截器
     public static class ServiceInterceptorRegistrar
     {
-        public static void Initialize(IKernel kernel)
+        public static void Initialize(IIocManager iocManager)
         {
-            kernel.ComponentRegistered += Kernel_ComponentRegistered;
+            iocManager.IocContainer.Kernel.ComponentRegistered += Kernel_ComponentRegistered;
         }
 
         private static void Kernel_ComponentRegistered(string key, IHandler handler)

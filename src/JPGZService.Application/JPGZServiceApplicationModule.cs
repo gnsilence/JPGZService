@@ -14,7 +14,7 @@ namespace JPGZService
         public override void PreInitialize()
         {
             //Configuration.Authorization.Providers.Add<JPGZServiceAuthorizationProvider>();
-            ServiceInterceptorRegistrar.Initialize(IocManager.IocContainer.Kernel);
+            ServiceInterceptorRegistrar.Initialize(IocManager);
         }
 
         public override void Initialize()
