@@ -17,10 +17,12 @@ using JPGZService.SqlServertestModel;
 using JPGZService.IRepositories;
 using Abp.Domain.Uow;
 using Abp.FreeSqlExtensions.FreeSqlExt.Repositories;
+using Abp.RemoteEventBus;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JPGZService.testmysqldb
 {
-    public class TestAppService : JPGZServiceAppServiceBase, ITestAppService
+    public class TestAppService : JPGZServiceAppServiceBase
     {
         private readonly IRepository<Person> _personRepository;
 
@@ -31,7 +33,7 @@ namespace JPGZService.testmysqldb
         private readonly IFreeSqlRepository<Person> _fpersonRepository;
 
         private readonly IFreeSqlRepository<Animal> _fanimalRepository;
-
+        private readonly IRemoteEventBus _remoteEventBus;
         private readonly INewsRepository _newsrepository;
         /// <summary>
         /// 发送邮件
@@ -62,7 +64,8 @@ namespace JPGZService.testmysqldb
             INewsRepository newsrepository,
             IFreeSqlRepository<News> freeSqlRepository,
             IFreeSqlRepository<Person> fpersonRepository,
-            IFreeSqlRepository<Animal> fanimalRepository
+            IFreeSqlRepository<Animal> fanimalRepository,
+            IRemoteEventBus remoteEventBus
         )
         {
             _personRepository = personRepository;
@@ -76,6 +79,7 @@ namespace JPGZService.testmysqldb
             _freeSqlRepository = freeSqlRepository;
             _fpersonRepository = fpersonRepository;
             _fanimalRepository = fanimalRepository;
+            _remoteEventBus = remoteEventBus;
         }
         /// <summary>
         /// 测试计划任务(httpjob)
@@ -218,6 +222,37 @@ namespace JPGZService.testmysqldb
 
             //var postsqllist = _fanimalRepository.GetAll().Select(p => p.Name).ToList();
             return titleslist;
+        }
+        RemoteEventData EventData = new RemoteEventData("Type_Test");
+        /// <summary>
+        /// 测试分布式事件总线
+        /// </summary>
+        public void TestRemoteEventBus()
+        {
+            EventData = new RemoteEventData("Type_Test")
+            {
+                Data = { ["playload"] = DateTime.Now }
+            };
+            //事务执行成功时发送数据，否则不发送
+            CurrentUnitOfWork.Completed += CurrentUnitOfWork_Completed;
+
+            //测试出现异常的情况，
+            //throw new Exception();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]//不在swagger显示此api
+        [AutomaticRetry(Attempts =3,OnAttemptsExceeded =AttemptsExceededAction.Fail)]//重试次数，重试结果处理
+        public void PublishData()
+        {
+            if (EventData != null)
+            {
+                _remoteEventBus.Publish("Topic_Test", EventData);
+            }
+        }
+        private void CurrentUnitOfWork_Completed(object sender, EventArgs e)
+        {
+            //将事件添加到队列里面
+            BackgroundJob.Enqueue<TestAppService>(job=>job.PublishData());
         }
     }
 }

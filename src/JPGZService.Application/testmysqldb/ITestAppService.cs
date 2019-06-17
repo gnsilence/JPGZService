@@ -25,5 +25,6 @@ namespace JPGZService.testmysqldb
         void SendEmail(EmalSendDto emalSendDto);
 
         List<string> GetAllNewsTitle();
+        void TestRemoteEventBus();
     }
 }

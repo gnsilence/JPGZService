@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Mvc.Internal;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc;
+using Abp.RemoteEventBus;
+using Abp.RemoteEventBus.Redis;
 
 #if FEATURE_SIGNALR
 using Abp.Web.SignalR;
@@ -34,7 +36,8 @@ namespace JPGZService
          typeof(JPGZServiceEntityFrameworkModule),
          typeof(AbpAspNetCoreModule),
         typeof(AbpRedisCacheModule),
-        typeof(AbpMailKitModule)
+        typeof(AbpMailKitModule),
+        typeof(AbpRemoteEventBusModule)
 #if FEATURE_SIGNALR 
         ,typeof(AbpWebSignalRModule)
 #elif FEATURE_SIGNALR_ASPNETCORE
@@ -87,7 +90,9 @@ namespace JPGZService
             Configuration.Modules.AbpAspNetCore()
                  .CreateControllersForAppServices(
                      typeof(JPGZServiceApplicationModule).GetAssembly()
-                 ).// 自定义路由格式，默认为/api/services/app/Controller.ControllerName/action.ActionName/
+                 ).
+                 /* 自定义路由格式，
+                 默认为/api/services/app/Controller.ControllerName/action.ActionName/*/
                  ConfigureControllerModel(model =>
                  {
                      foreach (var action in model.Actions)
@@ -120,7 +125,20 @@ namespace JPGZService
             tokenAuthConfig.SigningCredentials = new SigningCredentials(tokenAuthConfig.SecurityKey, SecurityAlgorithms.HmacSha256);
             tokenAuthConfig.Expiration = TimeSpan.FromDays(1);
         }
+        public override void PostInitialize()
+        {
+            //配置分布式事件总线
+            if (bool.Parse(_appConfiguration["App:RedisCache:IsEnabled"]))
+            {
 
+                Configuration.Modules.RemoteEventBus().UseRedis().Configure(x =>
+                {
+                    x.Server = _appConfiguration["App:RedisCache:ConnectionString"];
+                });
+            }
+            //自动订阅发布的消息,必须借助于redis，或者rabbitmq
+            Configuration.Modules.RemoteEventBus().AutoSubscribe();
+        }
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(JPGZServiceWebCoreModule).GetAssembly());

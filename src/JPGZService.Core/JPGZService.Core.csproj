@@ -27,5 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Abp.FreeSqlExtensions\Abp.FreeSqlExtensions.csproj" />
     <ProjectReference Include="..\ABP.FreeSql\ABP.FreeSqlSqlserver.csproj" />
+    <ProjectReference Include="..\Abp.RemoteEventBus.Redis\Abp.RemoteEventBus.Redis.csproj" />
   </ItemGroup>
 </Project>
