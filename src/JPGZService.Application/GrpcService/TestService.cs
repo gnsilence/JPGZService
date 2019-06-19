@@ -15,6 +15,14 @@ namespace JPGZService.GrpcService
         {
             _personRepository = personRepository;
         }
+        public TestService()
+        {
+
+        }
+        /// <summary>
+        /// Grpc服务
+        /// </summary>
+        /// <returns></returns>
         public UnaryResult<string> GetTestData()
         {
             var personname = _personRepository.FirstOrDefault(p => p.PersonName != null).PersonName;

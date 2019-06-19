@@ -4,24 +4,19 @@ using Abp.Grpc.Server.Extensions;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using JPGZService.Interceptors;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 //using JPGZService.Authorization;
 
 namespace JPGZService
 {
     [DependsOn(
         typeof(JPGZServiceCoreModule), 
-        typeof(AbpAutoMapperModule),
-        typeof(AbpGrpcServerModule))]
+        typeof(AbpAutoMapperModule))]
     public class JPGZServiceApplicationModule : AbpModule
     {
         public override void PreInitialize()
         {
-            //配置grpc
-            Configuration.Modules.UseGrpcService(option =>
-            {
-                option.GrpcBindAddress = "0.0.0.0";
-                option.GrpcBindPort = 40001;
-            }).AddRpcServiceAssembly(typeof(JPGZServiceApplicationModule).Assembly);
             //Configuration.Authorization.Providers.Add<JPGZServiceAuthorizationProvider>();
             ServiceInterceptorRegistrar.Initialize(IocManager);
         }

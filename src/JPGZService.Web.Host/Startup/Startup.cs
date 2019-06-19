@@ -16,6 +16,9 @@ using JPGZService.Configuration;
 using JPGZService.Identity;
 using System.IO;
 using System.Collections.Generic;
+using MagicOnion.Server;
+using Grpc.Core;
+using MagicOnion;
 
 
 #if FEATURE_SIGNALR
@@ -51,7 +54,7 @@ namespace JPGZService.Web.Host.Startup
             );
 
             AuthConfigurer.Configure(services, _appConfiguration);
-            ConfigHangfire.ConfigureHangFire(services,_appConfiguration);
+            ConfigHangfire.ConfigureHangFire(services, _appConfiguration);
 #if FEATURE_SIGNALR_ASPNETCORE
             services.AddSignalR();
 #endif
@@ -72,25 +75,34 @@ namespace JPGZService.Web.Host.Startup
                         .AllowAnyMethod()
                 )
             );
+            if (_appConfiguration["app:Swagger"] == "Grpc.Api")
+            {
+                // 获取grpc服务，配置swagger
+                var service = MagicOnionEngine.BuildServerServiceDefinition(new MagicOnionOptions(true)
+                {
+                    MagicOnionLogger = new MagicOnionLogToGrpcLogger()
+                });
 
-            // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
+                services.Add(new ServiceDescriptor(typeof(MagicOnionServiceDefinition), service));
+            }
+            // ABP-Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info
                 {
                     Title = "ABPWebApi APIService",
                     Version = "v1",
-                    Description="Use For Create Api Simple and Faster",
-                    Contact=new Contact
+                    Description = "Use For Create Api Simple and Faster",
+                    Contact = new Contact
                     {
-                        Name="gnsilence",
-                        Email="592254126@qq.com",
-                        Url=""
+                        Name = "gnsilence",
+                        Email = "592254126@qq.com",
+                        Url = ""
                     },
-                    License=new License
+                    License = new License
                     {
-                        Name= "License",
-                        Url=""
+                        Name = "License",
+                        Url = ""
                     }
                 });
                 options.DocInclusionPredicate((docName, description) => true);
@@ -98,10 +110,10 @@ namespace JPGZService.Web.Host.Startup
                 // Define the oauth2 scheme that's in use
                 options.AddSecurityDefinition("oauth2", new OAuth2Scheme()
                 {
-                   Flow= "implicit",//只需通过浏览器获取令牌（适用于swagger）
-                   AuthorizationUrl= "http://47.105.185.242:5001/connect/authorize",
-                   Description="",
-                   Scopes = new Dictionary<string, string>
+                    Flow = "implicit",//只需通过浏览器获取令牌（适用于swagger）
+                    AuthorizationUrl = "http://47.105.185.242:5001/connect/authorize",
+                    Description = "",
+                    Scopes = new Dictionary<string, string>
                     {
                         { "apitest", "APITEST - full access" }//指定客户端请求的api作用域。 如果为空，则客户端无法访问
                     }
@@ -126,6 +138,7 @@ namespace JPGZService.Web.Host.Startup
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
@@ -136,7 +149,7 @@ namespace JPGZService.Web.Host.Startup
 
             app.UseAbpRequestLocalization();
             // config hangfire use httpjob
-            ConfigHangfire.UseHangfireSettings(app,env,loggerFactory);
+            ConfigHangfire.UseHangfireSettings(app, env, loggerFactory);
 
 #if FEATURE_SIGNALR
             // Integrate with OWIN
@@ -159,6 +172,35 @@ namespace JPGZService.Web.Host.Startup
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            if (_appConfiguration["app:Swagger"] == "Grpc.Api")
+            {
+                var magicOnion = app.ApplicationServices.GetService<MagicOnionServiceDefinition>();
+                //grpc
+                var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录（绝对，不受工作目录影响，建议采用此方法获取路径）
+                var xmlPath = Path.Combine(basePath, "JPGZService.Application.xml");
+                app.UseMagicOnionSwagger(magicOnion.MethodHandlers, new MagicOnion.HttpGateway.Swagger.SwaggerOptions("Grpc.Server", "GrpcApiDoc", "/")
+                {
+                    Info = new MagicOnion.HttpGateway.Swagger.Schemas.Info()
+                    {
+                        title = "ABP.Grpc.Service",
+                        version = "v1",
+                        description = "ABP.Grpc Service",
+                        contact = new MagicOnion.HttpGateway.Swagger.Schemas.Contact
+                        {
+                            name = "gnsilence",
+                            email = "592254126@qq.com",
+                            url = ""
+                        },
+                        license = new MagicOnion.HttpGateway.Swagger.Schemas.License
+                        {
+                            name = "License",
+                            url = ""
+                        }
+                    },
+                    XmlDocumentPath = xmlPath
+                });
+                app.UseMagicOnionHttpGateway(magicOnion.MethodHandlers, new Channel("localhost:" + _appConfiguration["Grpc:GrpcBindPort"], ChannelCredentials.Insecure));
+            }
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)

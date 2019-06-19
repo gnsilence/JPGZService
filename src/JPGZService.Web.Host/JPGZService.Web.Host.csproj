@@ -76,5 +76,5 @@
       <HintPath>..\..\DLLS\Hangfire.Dashboard.BasicAuthorization.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/circleciconfig" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>

@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc;
 using Abp.RemoteEventBus;
 using Abp.RemoteEventBus.Redis;
+using Abp.Grpc.Server;
+using Abp.Grpc.Server.Extensions;
 
 #if FEATURE_SIGNALR
 using Abp.Web.SignalR;
@@ -37,7 +39,8 @@ namespace JPGZService
          typeof(AbpAspNetCoreModule),
         typeof(AbpRedisCacheModule),
         typeof(AbpMailKitModule),
-        typeof(AbpRemoteEventBusModule)
+        typeof(AbpRemoteEventBusModule),
+        typeof(AbpGrpcServerModule)
 #if FEATURE_SIGNALR 
         ,typeof(AbpWebSignalRModule)
 #elif FEATURE_SIGNALR_ASPNETCORE
@@ -60,6 +63,13 @@ namespace JPGZService
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(
                 JPGZServiceConsts.ConnectionStringName
             );
+            //配置grpc
+            Configuration.Modules.UseGrpcService(option =>
+            {
+                option.GrpcBindAddress = _appConfiguration["Grpc:GrpcBindAddress"];
+                option.GrpcBindPort = int.Parse(_appConfiguration["Grpc:GrpcBindPort"]);
+            }).AddRpcServiceAssembly(typeof(JPGZServiceApplicationModule).Assembly);
+
             //禁用redis缓存会自动使用内存缓存
             if (bool.Parse(_appConfiguration["App:RedisCache:IsEnabled"]))
             {
