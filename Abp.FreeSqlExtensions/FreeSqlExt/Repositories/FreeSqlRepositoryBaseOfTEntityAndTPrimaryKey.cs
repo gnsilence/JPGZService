@@ -117,7 +117,7 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
         public override TEntity FirstOrDefault(TPrimaryKey id)
         {
             return DataBase.Select<TEntity>()
-                .Where(e => EqualityComparer<TPrimaryKey>.Default.Equals(e.Id, id))
+                .Where(p => p.Id.Equals(id))
                 .WithConnection(Connection)
                 .WithTransaction(transaction: ActiveTransaction)
                 .First();
@@ -134,11 +134,12 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
 
         public override TEntity Get(TPrimaryKey id)
         {
-            return DataBase.Select<TEntity>()
-                .Where(e => EqualityComparer<TPrimaryKey>.Default.Equals(e.Id, id))
+            var entity = DataBase.Select<TEntity>()
+                .Where(p => p.Id.Equals(id))
                 .WithConnection(Connection)
                 .WithTransaction(transaction: ActiveTransaction)
                 .First();
+            return entity;
         }
 
         public override IEnumerable<TEntity> GetAll()
@@ -167,7 +168,7 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
         public override TEntity InsertAndGetEntity(TEntity entity)
         {
             EntityChangeEventHelper.TriggerEntityCreatingEvent(entity);
-            if ((DbType == DataType.SqlServer) || (DbType==DataType.PostgreSQL))
+            if ((DbType == DataType.SqlServer) || (DbType == DataType.PostgreSQL))
             {
                 entity = DataBase.Insert(entity)
                .WithConnection(Connection)
@@ -206,7 +207,7 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
         public override TEntity Single(TPrimaryKey id)
         {
             return DataBase.Select<TEntity>()
-                .Where(e => EqualityComparer<TPrimaryKey>.Default.Equals(e.Id, id)).
+                .Where(e => e.Id.Equals(id)).
                 WithConnection(Connection)
                 .WithTransaction(transaction: ActiveTransaction)
                 .First();
@@ -230,35 +231,43 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
 
         public override int Updates(IEnumerable<TEntity> entities)
         {
-           return DataBase.Update<TEntity>()
-              .WithConnection(Connection)
-              .WithTransaction(transaction: ActiveTransaction)
-              .SetSource(entities).ExecuteAffrows();
+            return DataBase.Update<TEntity>()
+               .WithConnection(Connection)
+               .WithTransaction(transaction: ActiveTransaction)
+               .SetSource(entities).ExecuteAffrows();
         }
 
         public override int Update(object dywhere)
         {
-           return DataBase.Update<TEntity>(dywhere)
-              .WithConnection(Connection)
-              .WithTransaction(transaction: ActiveTransaction).ExecuteAffrows();
+            return DataBase.Update<TEntity>(dywhere)
+               .WithConnection(Connection)
+               .WithTransaction(transaction: ActiveTransaction).ExecuteAffrows();
         }
 
         public override int Inserts(IEnumerable<TEntity> entities)
         {
-          return DataBase.Insert<TEntity>()
-                .WithConnection(Connection)
-                .WithTransaction(transaction:ActiveTransaction)
-                .AppendData(entities).ExecuteAffrows();
+            return DataBase.Insert<TEntity>()
+                  .WithConnection(Connection)
+                  .WithTransaction(transaction: ActiveTransaction)
+                  .AppendData(entities).ExecuteAffrows();
         }
 
         public override TEntity UpdateAndGetEntity(TEntity entity)
         {
-            EntityChangeEventHelper.TriggerEntityUpdatingEvent(entity);
-           var updated= DataBase.Update<TEntity>().WithConnection(Connection)
-                .WithTransaction(transaction: ActiveTransaction)
-                .SetSource(entity).ExecuteUpdated();
-            EntityChangeEventHelper.TriggerEntityUpdatedEventOnUowCompleted(entity);
-            return updated.FirstOrDefault();
+            if (DbType == DataType.MySql)
+            {
+                throw new NotSupportedException("Mysql Not Support UpdateAndGetEntity");
+            }
+            else
+            {
+                EntityChangeEventHelper.TriggerEntityUpdatingEvent(entity);
+                var updated = DataBase.Update<TEntity>().WithConnection(Connection)
+                     .WithTransaction(transaction: ActiveTransaction)
+                     .SetSource(entity).ExecuteUpdated();
+                EntityChangeEventHelper.TriggerEntityUpdatedEventOnUowCompleted(entity);
+                return updated.FirstOrDefault();
+            }
+           
         }
     }
 }
