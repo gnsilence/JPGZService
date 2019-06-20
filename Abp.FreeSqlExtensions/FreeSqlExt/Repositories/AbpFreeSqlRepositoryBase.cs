@@ -151,7 +151,11 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
         {
             return Task.FromResult(Get(id));
         }
-
+        /// <summary>
+        /// get expression for id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected static Expression<Func<TEntity, bool>> CreateEqualityExpressionForId(TPrimaryKey id)
         {
             ParameterExpression lambdaParam = Expression.Parameter(typeof(TEntity));

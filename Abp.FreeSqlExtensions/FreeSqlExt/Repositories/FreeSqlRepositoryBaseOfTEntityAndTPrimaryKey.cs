@@ -135,7 +135,7 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
         public override TEntity Get(TPrimaryKey id)
         {
             var entity = DataBase.Select<TEntity>()
-                .Where(p => p.Id.Equals(id))
+                .Where(CreateEqualityExpressionForId(id))
                 .WithConnection(Connection)
                 .WithTransaction(transaction: ActiveTransaction)
                 .First();
@@ -207,7 +207,7 @@ namespace Abp.FreeSqlExtensions.FreeSqlExt.Repositories
         public override TEntity Single(TPrimaryKey id)
         {
             return DataBase.Select<TEntity>()
-                .Where(e => e.Id.Equals(id)).
+                .Where(CreateEqualityExpressionForId(id)).
                 WithConnection(Connection)
                 .WithTransaction(transaction: ActiveTransaction)
                 .First();
