@@ -8,6 +8,8 @@
 		<Description>Mysql, postgresql, sqlserver, Oracle and SQLite connection object extension methods.</Description>
 		<PackageProjectUrl>https://github.com/2881099/FreeSql.Connection.Extensions</PackageProjectUrl>
 		<PackageTags>FreeSql ORM SqlConnection</PackageTags>
+		<PackageId>FreeSql.Connection.Extensions.ForAbp</PackageId>
+		<Product>FreeSql.Connection.Extensions.ForAbp</Product>
 	</PropertyGroup>
 
 	<ItemGroup>

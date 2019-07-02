@@ -2,15 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Freesql Orm  Extensions  For Abp with EFCore .
+Before Use, you should  add " Persist Security Info=true "  to  config  connectionstrings
+Support : mysql, msssql, progresql</Description>
+    <PackageProjectUrl>https://github.com/gnsilence/JPGZService</PackageProjectUrl>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Abp" Version="4.6.0" />
+    <PackageReference Include="FreeSql.Connection.Extensions.ForAbp" Version="0.6.4" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FreeSql.Connection.Extensions\FreeSql.Connection.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

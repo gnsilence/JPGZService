@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Abp.AutoMapper" Version="4.6.0" />
+    <PackageReference Include="Abp.FreeSqlExtensions" Version="1.0.1" />
     <PackageReference Include="Abp.Grpc.Server" Version="4.6.0" />
     <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="4.6.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
@@ -26,7 +27,6 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Abp.FreeSqlExtensions\Abp.FreeSqlExtensions.csproj" />
     <ProjectReference Include="..\ABP.FreeSql\ABP.FreeSqlSqlserver.csproj" />
     <ProjectReference Include="..\Abp.RemoteEventBus.Redis\Abp.RemoteEventBus.Redis.csproj" />
   </ItemGroup>
