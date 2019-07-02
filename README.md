@@ -1,10 +1,21 @@
-# 基于ABP的动态Webapi快速开发框架
+- [ 基于ABP的动态Webapi快速开发框架](#head1)
+	- [ 框架介绍](#head2)
+		- [ 1.基础配置及数据库迁移](#head3)
+			- [ 1.配置数据库连接](#head4)
+			- [ 2.数据库迁移](#head5)
+		- [ 2.普通webapi接口开发及测试](#head6)
+			- [ 快速开发一个接口](#head7)
+		- [ 3.GRPC服务快速开发及测试](#head8)
+		- [ 4.使用identityServer4保护接口安全](#head9)
+		- [ 5.如何使用分布式事件总线](#head10)
+		- [ 6.数据缓存，邮件发送，定时任务等配置及使用](#head11)
+# <span id="head1"> 基于ABP的动态Webapi快速开发框架</span>
 **目录 (Table of Contents)**
 
 [TOCM]
 
 [TOC]
-## 框架介绍
+## <span id="head2"> 框架介绍</span>
 ------------
 > 关于ABP这里不在做描述，可以访问官网(https://aspnetboilerplate.com)来查看。
 此框架是在ABPZero的基础上删除了原有的部分功能如用户，多租户，权限等，用来专注于接口开发，实现轻量级快速开发。可用于单库或多库，目前添加了，mysql, sqlserver, postgresql
@@ -22,17 +33,17 @@
 ------------
 
 ------------
-### 1.基础配置及数据库迁移
-#### 1.配置数据库连接
+### <span id="head3"> 1.基础配置及数据库迁移</span>
+#### <span id="head4"> 1.配置数据库连接</span>
 数据库的配置位于Web.Host下，Appsetiings.json中
 > 具体配置：
 连接字符串：
 <pre>
 "ConnectionStrings":{
-    "Default": "Data Source =.;Initial Catalog =XA_JPGZPlatform;User Id =sa;Password=123456;Trusted_Connection=False;Persist Security Info=true",
-    "Mysql": "Server=47.105.185.242;Port=3306;Database=jpmysql;Uid=root;Pwd=123456;charset=utf8;SslMode=none;Persist Security Info=true",
-    "PostgreSql": "User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=abpapi;Persist Security Info=true"
-  }
+"Default": "Data Source =.;Initial Catalog =XA_JPGZPlatform;User Id =sa;Password=123456;Trusted_Connection=False;Persist Security Info=true",
+"Mysql": "Server=47.105.185.242;Port=3306;Database=jpmysql;Uid=root;Pwd=123456;charset=utf8;SslMode=none;Persist Security Info=true",
+"PostgreSql": "User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=abpapi;Persist Security Info=true"
+}
 </pre>
 
 > 分别为：sqlserver, mysql，postgresql的数据库配置,(**特别注意，如果使用freesql拓展，后面必须要配置Persist Security Info=true**)，因为freesql会从DBContext
@@ -41,41 +52,41 @@
 > 设置EFCore模块，多库及单库配置
 在JPGZService.EntityFrameworkCore下，EntityFrameworkCore中的JPGZServiceEntityFrameworkModule中：
 <pre>
- public bool SkipDbContextRegistration { get; set; }
- // SkipRegister SqlserverContext
- ///跳过sqlserver注册
- public bool SkipSqlserverDbContextRegistration { get; set; } = false;
- /// <summary>
- /// SkipRegister MysqlContext
- /// </summary>
- public bool SkipMysqlDbContextRegistration { get; set; } = false;
- /// <summary>
- /// Skip postSqlContext
- /// </summary>
- public bool SkipPostgreSqlDbContextRegistration { get; set; } = false;
- /// <summary>
- /// skip seed initdata
- /// </summary>
- public bool SkipDbSeed { get; set; }
+public bool SkipDbContextRegistration { get; set; }
+// SkipRegister SqlserverContext
+///跳过sqlserver注册
+public bool SkipSqlserverDbContextRegistration { get; set; } = false;
+/// <summary>
+/// SkipRegister MysqlContext
+/// </summary>
+public bool SkipMysqlDbContextRegistration { get; set; } = false;
+/// <summary>
+/// Skip postSqlContext
+/// </summary>
+public bool SkipPostgreSqlDbContextRegistration { get; set; } = false;
+/// <summary>
+/// skip seed initdata
+/// </summary>
+public bool SkipDbSeed { get; set; }
 </pre>
 
 分别为，是否跳过数据库注册，如果设置false则使用多库。
-#### 2.数据库迁移
+#### <span id="head5"> 2.数据库迁移</span>
 使用codefirst使，先创建实体，项目中约定在领域层(JPGZService.Core)中创建实体文件，
 格式如：
 <pre>
 [Table("tb_Animal")]//表名
- public class Animal: Entity
-  {
-  public string Name { get; set; }
-    public Animal()
-     {
-     }
+public class Animal: Entity
+{
+public string Name { get; set; }
+public Animal()
+{
+}
 	public Animal(string name)
-     {
+{
 	 Name = name;
 	 }
- }
+}
 </pre>
 
 然后别忘记在DBContext中添加DbSet.具体使用哪个库，在哪个库的context下添加
@@ -86,8 +97,8 @@
 
 如果迁移失败，删除项目中以及存在的迁移记录，然后再尝试生成数据库及表。
 
-### 2.普通webapi接口开发及测试
-#### 快速开发一个接口
+### <span id="head6"> 2.普通webapi接口开发及测试</span>
+#### <span id="head7"> 快速开发一个接口</span>
 > 项目中，接口开发统一放在(JPGZService.Application)模块下，ABP使用约定大于配置的方式，因此接口被限制为必须以 IXXXAppService
 实现必须为 XXXAppService，其中APP可以改为别的名称，但是我们可以通过配置路由，无需更改，项目中已经配置了路由，格式为：
 api/{action.Controller.ControllerName}/{action.ActionName}
@@ -97,29 +108,29 @@ api/{action.Controller.ControllerName}/{action.ActionName}
 1. 添加一个接口，IxxxAppService,添加一个实现XXXAppservice继承于IxxxAppService
 2. XXXAppservice中的实现
 <pre>
- public class TestAppService : JPGZServiceAppServiceBase
-    {
-        private readonly IRepository<Person> _personRepository;
+public class TestAppService : JPGZServiceAppServiceBase
+{
+private readonly IRepository<Person> _personRepository;
 		
 		public TestAppService
 		(
-            IRepository<Person> personRepository,
-        )
+IRepository<Person> personRepository,
+)
 		
-        {
-            _personRepository = personRepository;
-        }
+{
+_personRepository = personRepository;
+}
 		
 	public List<string> GetPeople()
-        {
-            var entity = new Person()
-            {
-                PersonName = "张锋"
-            };
-            var eny = _fpersonRepository.InsertAndGetEntityAsync(entity);
-            var peopleNames = _fpersonRepository.GetAll().Select(p => p.PersonName).ToList();
-            return peopleNames;
-        }
+{
+var entity = new Person()
+{
+PersonName = "张锋"
+};
+var eny = _fpersonRepository.InsertAndGetEntityAsync(entity);
+var peopleNames = _fpersonRepository.GetAll().Select(p => p.PersonName).ToList();
+return peopleNames;
+}
 	}
 </pre>
 
@@ -130,7 +141,7 @@ api/{action.Controller.ControllerName}/{action.ActionName}
 
 使用Swagger调试接口，只需要更改配置文件中，Swagger的值为Abp.api，设置为Grpc.Api是用来调试GRPC服务
 
-### 3.GRPC服务快速开发及测试
-### 4.使用identityServer4保护接口安全
-### 5.如何使用分布式事件总线
-### 6.数据缓存，邮件发送，定时任务等配置及使用
+### <span id="head8"> 3.GRPC服务快速开发及测试</span>
+### <span id="head9"> 4.使用identityServer4保护接口安全</span>
+### <span id="head10"> 5.如何使用分布式事件总线</span>
+### <span id="head11"> 6.数据缓存，邮件发送，定时任务等配置及使用</span>
