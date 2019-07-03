@@ -83,10 +83,10 @@ public string Name { get; set; }
 public Animal()
 {
 }
-	public Animal(string name)
+public Animal(string name)
 {
-	 Name = name;
-	 }
+	Name = name;
+}
 }
 ```
 
@@ -112,27 +112,21 @@ api/{action.Controller.ControllerName}/{action.ActionName}
 public class TestAppService : JPGZServiceAppServiceBase
 {
 private readonly IRepository<Person> _personRepository;
-		
-		public TestAppService
-		(
-IRepository<Person> personRepository,
-)
-		
-{
-_personRepository = personRepository;
-}
-		
-	public List<string> GetPeople()
-{
-var entity = new Person()
-{
-PersonName = "张锋"
-};
-var eny = _fpersonRepository.InsertAndGetEntityAsync(entity);
-var peopleNames = _fpersonRepository.GetAll().Select(p => p.PersonName).ToList();
-return peopleNames;
-}
+	public TestAppService(IRepository<Person> personRepository)
+	{
+		_personRepository = personRepository;
 	}
+	public List<string> GetPeople()
+	{
+		var entity = new Person()
+		{
+			PersonName = "张锋"
+		};
+		var eny = _fpersonRepository.InsertAndGetEntityAsync(entity);
+		var peopleNames = _fpersonRepository.GetAll().Select(p => p.PersonName).ToList();
+		return peopleNames;
+	}
+}
 ```
 
 这样就完成了一个接口的开发，仓储通过动态生成，无需手动添加，Abp中的所有方法都自带事务操作。
