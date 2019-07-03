@@ -10,11 +10,6 @@
 		- [ 5.如何使用分布式事件总线](#head10)
 		- [ 6.数据缓存，邮件发送，定时任务等配置及使用](#head11)
 # <span id="head1"> 基于ABP的动态Webapi快速开发框架</span>
-**目录 (Table of Contents)**
-
-[TOCM]
-
-[TOC]
 ## <span id="head2"> 框架介绍</span>
 ------------
 > 关于ABP这里不在做描述，可以访问官网(https://aspnetboilerplate.com)来查看。
@@ -38,20 +33,21 @@
 数据库的配置位于Web.Host下，Appsetiings.json中
 > 具体配置：
 连接字符串：
-<pre>
+
+```
 "ConnectionStrings":{
 "Default": "Data Source =.;Initial Catalog =XA_JPGZPlatform;User Id =sa;Password=123456;Trusted_Connection=False;Persist Security Info=true",
 "Mysql": "Server=47.105.185.242;Port=3306;Database=jpmysql;Uid=root;Pwd=123456;charset=utf8;SslMode=none;Persist Security Info=true",
 "PostgreSql": "User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=abpapi;Persist Security Info=true"
 }
-</pre>
+```
 
 > 分别为：sqlserver, mysql，postgresql的数据库配置,(**特别注意，如果使用freesql拓展，后面必须要配置Persist Security Info=true**)，因为freesql会从DBContext
 获取连接字符串。
 
 > 设置EFCore模块，多库及单库配置
 在JPGZService.EntityFrameworkCore下，EntityFrameworkCore中的JPGZServiceEntityFrameworkModule中：
-<pre>
+```
 public bool SkipDbContextRegistration { get; set; }
 // SkipRegister SqlserverContext
 ///跳过sqlserver注册
@@ -68,13 +64,13 @@ public bool SkipPostgreSqlDbContextRegistration { get; set; } = false;
 /// skip seed initdata
 /// </summary>
 public bool SkipDbSeed { get; set; }
-</pre>
+```
 
 分别为，是否跳过数据库注册，如果设置false则使用多库。
 #### <span id="head5"> 2.数据库迁移</span>
 使用codefirst使，先创建实体，项目中约定在领域层(JPGZService.Core)中创建实体文件，
 格式如：
-<pre>
+```
 [Table("tb_Animal")]//表名
 public class Animal: Entity
 {
@@ -87,7 +83,7 @@ public Animal()
 	 Name = name;
 	 }
 }
-</pre>
+```
 
 然后别忘记在DBContext中添加DbSet.具体使用哪个库，在哪个库的context下添加
 数据库迁移：
@@ -107,7 +103,7 @@ api/{action.Controller.ControllerName}/{action.ActionName}
 开发一个示例接口只需要执行以下步骤：
 1. 添加一个接口，IxxxAppService,添加一个实现XXXAppservice继承于IxxxAppService
 2. XXXAppservice中的实现
-<pre>
+```
 public class TestAppService : JPGZServiceAppServiceBase
 {
 private readonly IRepository<Person> _personRepository;
@@ -132,7 +128,7 @@ var peopleNames = _fpersonRepository.GetAll().Select(p => p.PersonName).ToList()
 return peopleNames;
 }
 	}
-</pre>
+```
 
 这样就完成了一个接口的开发，仓储通过动态生成，无需手动添加，Abp中的所有方法都自带事务操作。
 (特别的：可以省略接口层，直接添加XXXAppService，无需添加IXXXAppService,因为继承的基类继承了ApplicationService，这样写开发速度快，但是有时候不利于维护)

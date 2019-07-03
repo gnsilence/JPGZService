@@ -31,6 +31,7 @@
     <ProjectReference Include="..\JPGZService.Web.Core\JPGZService.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Hangfire.Heartbeat" Version="0.5.0" />
     <PackageReference Include="Hangfire.HttpJob.Ext" Version="1.0.5" />
     <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.8.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3">

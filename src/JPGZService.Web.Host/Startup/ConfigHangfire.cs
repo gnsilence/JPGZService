@@ -2,6 +2,8 @@
 using Hangfire.Console;
 using Hangfire.Dashboard;
 using Hangfire.Dashboard.BasicAuthorization;
+using Hangfire.Heartbeat;
+using Hangfire.Heartbeat.Server;
 using Hangfire.HttpJob;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -78,6 +81,7 @@ namespace JPGZService.Web.Host.Startup
                     Redis = ConnectionMultiplexer.Connect(ConnectionStrng);
                     services.AddHangfire(config =>
                     {
+                        config.UseHeartbeatPage(checkInterval: TimeSpan.FromSeconds(1));
                         //使用redis
                         config.UseRedisStorage(Redis, new Hangfire.Redis.RedisStorageOptions()
                         {
@@ -109,7 +113,8 @@ namespace JPGZService.Web.Host.Startup
                         .UseDashboardMetric(DashboardMetrics.ProcessingCount)
                         .UseDashboardMetric(DashboardMetrics.RecurringJobCount)
                         .UseDashboardMetric(DashboardMetrics.RetriesCount)
-                        .UseDashboardMetric(DashboardMetrics.FailedCount);
+                        .UseDashboardMetric(DashboardMetrics.FailedCount)
+                        ;
                     });
                 }
 
@@ -120,7 +125,7 @@ namespace JPGZService.Web.Host.Startup
         }
 
         /// <summary>
-        /// config hangfire
+        /// config hangfirez
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
@@ -146,7 +151,7 @@ namespace JPGZService.Web.Host.Startup
                         // UI strings that we have localized.
                         SupportedUICultures = supportedCultures
                     });
-
+                    var process = Process.GetCurrentProcess();
                     app.UseHangfireServer(new BackgroundJobServerOptions()
                     {
                         ServerTimeout = TimeSpan.FromMinutes(4),
@@ -154,7 +159,8 @@ namespace JPGZService.Web.Host.Startup
                         ShutdownTimeout = TimeSpan.FromMinutes(30),// 超时时间
                         Queues = Queues,// 队列
                         WorkerCount = Math.Max(Environment.ProcessorCount, 40)// 工作线程数，当前允许的最大线程，默认20
-                    }
+                    },
+                    additionalProcesses: new[] { new ProcessMonitor(checkInterval: TimeSpan.FromSeconds(1)) }
                     );
                     app.UseHangfireDashboard("/job", new DashboardOptions
                     {
