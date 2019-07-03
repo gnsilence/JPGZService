@@ -39,7 +39,7 @@
 > 具体配置：
 连接字符串：
 
-```
+```C#
 "ConnectionStrings":{
 "Default": "Data Source =.;Initial Catalog =XA_JPGZPlatform;User Id =sa;Password=123456;Trusted_Connection=False;Persist Security Info=true",
 "Mysql": "Server=47.105.185.242;Port=3306;Database=jpmysql;Uid=root;Pwd=123456;charset=utf8;SslMode=none;Persist Security Info=true",
@@ -52,7 +52,7 @@
 
 > 设置EFCore模块，多库及单库配置
 在JPGZService.EntityFrameworkCore下，EntityFrameworkCore中的JPGZServiceEntityFrameworkModule中：
-```
+```C#
 public bool SkipDbContextRegistration { get; set; }
 // SkipRegister SqlserverContext
 ///跳过sqlserver注册
@@ -75,7 +75,7 @@ public bool SkipDbSeed { get; set; }
 #### <span id="head5"> 2.数据库迁移</span>
 使用codefirst使，先创建实体，项目中约定在领域层(JPGZService.Core)中创建实体文件，
 格式如：
-```
+```C#
 [Table("tb_Animal")]//表名
 public class Animal: Entity
 {
@@ -108,7 +108,7 @@ api/{action.Controller.ControllerName}/{action.ActionName}
 开发一个示例接口只需要执行以下步骤：
 1. 添加一个接口，IxxxAppService,添加一个实现XXXAppservice继承于IxxxAppService
 2. XXXAppservice中的实现
-```
+```C#
 public class TestAppService : JPGZServiceAppServiceBase
 {
 private readonly IRepository<Person> _personRepository;
