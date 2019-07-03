@@ -22,7 +22,8 @@
 ------------
 > 关于ABP这里不在做描述，可以访问官网(https://aspnetboilerplate.com)来查看。
 此框架是在ABPZero的基础上删除了原有的部分功能如用户，多租户，权限等，用来专注于接口开发，实现轻量级快速开发。可用于单库或多库，目前添加了，mysql, sqlserver, postgresql
-项目的主要功能：
+
+> 项目的主要功能：
 - 使用EFCore+Freesql作为ORM，通过EFCore来迁移数据库，代码运行时自动生成仓储层，接口层，可以方便快速写业务代码。
 - 添加了拦截器示例，基于Castle.DynamicProxy，使用它的好处是，拦截时可以获取方法的参数名称及值，以及动态改变参数，动态改变方法返回值类型等。
 - 添加了GRPC服务，方便开发GRPC服务，GRPC支持Consul作为服务注册及发现，方便支持集群，以及示例中展示了，如何在.netcore 控制台，及传统webapi
@@ -96,8 +97,14 @@ public Animal(string name)
 然后别忘记在DBContext中添加DbSet.具体使用哪个库，在哪个库的context下添加
 数据库迁移：
 以mysql为例，需要执行的迁移命令：
-> Add-Migration _MysqlInit_201906 - Context JPGZServiceMysqlDbContext
-> Update-Database - Context JPGZServiceMysqlDbContext
+
+```C#
+Add-Migration _MysqlInit_201906 - Context JPGZServiceMysqlDbContext
+```
+
+```C#
+Update-Database - Context JPGZServiceMysqlDbContext
+```
 
 如果迁移失败，删除项目中以及存在的迁移记录，然后再尝试生成数据库及表。
 
