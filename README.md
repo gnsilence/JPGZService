@@ -6,6 +6,9 @@
 		- [ 2.普通webapi接口开发及测试](#head6)
 			- [ 快速开发一个接口](#head7)
 		- [ 3.GRPC服务快速开发及测试](#head8)
+			- [ 1.快速开发一个GRPC服务](#head12)
+			- [ 2.在普通WebpApi中使用GRPC客户端访问服务](#head13)
+			- [ 3.使用Swagger调试GRPC服务](#head14)
 		- [ 4.使用identityServer4保护接口安全](#head9)
 		- [ 5.如何使用分布式事件总线](#head10)
 		- [ 6.数据缓存，邮件发送，定时任务等配置及使用](#head11)
@@ -47,7 +50,7 @@
 }
 ```
 
-> 分别为：sqlserver, mysql，postgresql的数据库配置,(**特别注意，如果使用freesql拓展，后面必须要配置Persist Security Info=true**)，因为freesql会从DBContext
+> 分别为：sqlserver, mysql，postgresql的数据库配置,(`特别注意，如果使用freesql拓展，后面必须要配置Persist Security Info=true`)，因为freesql会从DBContext
 获取连接字符串。
 
 > 设置EFCore模块，多库及单库配置
@@ -130,13 +133,176 @@ private readonly IRepository<Person> _personRepository;
 ```
 
 这样就完成了一个接口的开发，仓储通过动态生成，无需手动添加，Abp中的所有方法都自带事务操作。
-(特别的：可以省略接口层，直接添加XXXAppService，无需添加IXXXAppService,因为继承的基类继承了ApplicationService，这样写开发速度快，但是有时候不利于维护)
+(`特别的：可以省略接口层，直接添加XXXAppService，无需添加IXXXAppService,因为继承的基类继承了ApplicationService，这样写开发速度快，但是有时候不利于维护`)
 
 使用Freesql作为Orm，仅仅只需要将IRepository写为IFreeSqlRepository，就可以实现如批量添加，批量更新，执行sql语句等功能。
 
-使用Swagger调试接口，只需要更改配置文件中，Swagger的值为Abp.api，设置为Grpc.Api是用来调试GRPC服务
+`使用Swagger调试接口，只需要更改配置文件中，Swagger的值为Abp.api，设置为Grpc.Api是用来调试GRPC服务`
 
 ### <span id="head8"> 3.GRPC服务快速开发及测试</span>
+#### <span id="head12"> 1. 快速开发一个GRPC服务
+> 快速开发一个GRPC服务，服务存放位置和普通Api一样，不同的是接口定义，接口实现，及序列化
+接口的定义如下：
+
+```C#
+ public interface ITestService: IService<ITestService>
+    {
+        /// <summary>
+        /// grpc服务
+        /// </summary>
+        /// <returns></returns>
+        UnaryResult<string> GetTestData();
+        /// <summary>
+        /// 获取查询出的第一个结果
+        /// </summary>
+        /// <returns></returns>
+        UnaryResult<Person> GetFirstPerson();
+    }
+```
+如果返回值类型是实体，则需要序列化，只需要添加如下特性：
+
+```C#
+	[MessagePackObject(true)]//序列化
+    [Table("tb_Person")]
+    public class Person:Entity
+    {
+
+        public virtual string PersonName { get; set; }
+
+        public Person()
+        {
+
+        }
+
+        public Person(string personName)
+        {
+            PersonName = personName;
+        }
+    }
+```
+
+> 服务的实现，和普通接口实现方式一样，不同的是继承基类，返回值不一样,代码如下(`使用swagger调试时需要添加无参的构造函数`)
+
+```C#
+ public class TestService : ServiceBase<ITestService>, ITestService
+    {
+        private readonly IRepository<Person> _personRepository;
+        public TestService(IRepository<Person> personRepository)
+        {
+            _personRepository = personRepository;
+        }
+        public TestService()
+        {
+
+        }
+        /// <summary>
+        /// Grpc服务
+        /// </summary>
+        /// <returns></returns>
+        public UnaryResult<string> GetTestData()
+        {
+            var personname = _personRepository.FirstOrDefault(p => p.PersonName != null).PersonName;
+            return new UnaryResult<string>(personname);
+        }
+
+        public UnaryResult<Person> GetFirstPerson()
+        {
+            return new UnaryResult<Person>(_personRepository.FirstOrDefault(p => p.PersonName != null));
+        }
+    }
+```
+
+#### <span id="head13"> 2. 在普通WebpApi中使用GRPC客户端访问服务
+> 使用Grpc客户端来调用服务，在普通的Core webApi中调用，可以添加一个简单的abp模块,引用AbpGrpcClientModule模块，来调用，例如：
+
+```C#
+[DependsOn(typeof(AbpGrpcClientModule))]
+    public class TestAbpRemoteEventBusModule: AbpModule
+    {
+        public override void Initialize()
+        {
+            IocManager.RegisterAssemblyByConvention(typeof(TestAbpRemoteEventBusModule).GetAssembly());
+        }
+
+        public override void PostInitialize()
+        {
+            // 配置grpc，直连模式
+            Configuration.Modules.UseGrpcClientForDirectConnection(new[]
+            {
+                new GrpcServerNode
+                {
+                    GrpcServiceIp = "127.0.0.1",
+                    GrpcServiceName = "TestServiceName",
+                    GrpcServicePort = 40001
+                }
+            });
+        }
+    }
+```
+
+> 在启动类里面配置模块的启动：
+
+```C#
+ public static void Main(string[] args)
+        {
+            var bootstrapper = AbpBootstrapper.Create<TestAbpRemoteEventBusModule>();
+
+
+            //bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f =>
+            //   f.UseAbpLog4Net().WithConfig("log4net.config"));
+
+            bootstrapper.Initialize();
+
+            CreateWebHostBuilder(args).Build().Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>();
+```
+
+>最后配置依赖注入，将abp的依赖注入，转换成.net core自带的依赖注入:
+
+```C#
+services.AddSingleton(x =>
+            {
+                var connectionUtility= IocManager.Instance.IocContainer.Resolve<IGrpcConnectionUtility>();
+                return connectionUtility;
+            });
+```
+
+>在接口中使用
+首先添加接口层
+
+```C#
+   public interface ITestService: IService<ITestService>
+    {
+        UnaryResult<string> GetTestData();
+
+        UnaryResult<Person> GetFirstPerson();
+    }
+```
+> 在接口层调用
+
+```C#
+private readonly IGrpcConnectionUtility _connectionUtility;
+
+public ValuesController(IGrpcConnectionUtility connectionUtility)
+{
+    _connectionUtility = connectionUtility;
+}
+
+[HttpGet]
+[Route("/api/GetGrpcService")]
+public async Task<Person> GetGrpcService()
+{
+    var service = _connectionUtility.GetRemoteServiceForDirectConnection<ITestService>("TestServiceName");
+    return await service.GetFirstPerson();
+}
+```
+这样就可以方便的使用grpc服务，客户端如果不想创建实体类，可以将返回值改为object
+#### <span id="head14"> 3. 使用Swagger调试GRPC服务
+> 在配置文件中配置启用调试abp的api还是grpc服务，可以直接运行调试grpc。`需要注意的是，备注信息需要在接口层添加，和一般的不太一样。`
 ### <span id="head9"> 4.使用identityServer4保护接口安全</span>
 ### <span id="head10"> 5.如何使用分布式事件总线</span>
 ### <span id="head11"> 6.数据缓存，邮件发送，定时任务等配置及使用</span>

@@ -40,11 +40,10 @@ namespace WebApiDemo.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("/api/GetGrpcService")]
-        public string GetGrpcService()
+        public async Task<object> GetGrpcService()
         {
-          var service=  _connectionUtility.GetRemoteServiceForDirectConnection<ITestService>("TestServiceName");
-
-            return service.GetTestData().GetAwaiter().GetResult();
+            var service = _connectionUtility.GetRemoteServiceForDirectConnection<ITestService>("TestServiceName");
+            return await service.GetFirstPerson();
         }
 
         // GET api/values/5

@@ -28,5 +28,10 @@ namespace JPGZService.GrpcService
             var personname = _personRepository.FirstOrDefault(p => p.PersonName != null).PersonName;
             return new UnaryResult<string>(personname);
         }
+
+        public UnaryResult<Person> GetFirstPerson()
+        {
+            return new UnaryResult<Person>(_personRepository.FirstOrDefault(p => p.PersonName != null));
+        }
     }
 }

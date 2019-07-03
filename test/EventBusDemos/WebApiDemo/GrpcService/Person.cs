@@ -1,17 +1,15 @@
-﻿using Abp.Domain.Entities;
-using MessagePack;
+﻿using MessagePack;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace JPGZService.testmysqldb
+namespace WebApiDemo.GrpcService
 {
     [MessagePackObject(true)]
-    [Table("tb_Person")]
-    public class Person:Entity
+    public class Person
     {
-
+        public int Id { get; set; }
         public virtual string PersonName { get; set; }
 
         public Person()
