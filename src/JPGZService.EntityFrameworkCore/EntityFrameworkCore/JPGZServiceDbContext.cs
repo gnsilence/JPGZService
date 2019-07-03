@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Abp.EntityFrameworkCore;
 using JPGZService.SqlServertestModel;
+using Abp.Auditing;
 
 namespace JPGZService.EntityFrameworkCore
 {
@@ -41,5 +42,6 @@ namespace JPGZService.EntityFrameworkCore
         }
 
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<AuditLog> AuditLogs { get; set; }
     }
 }

@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JPGZService.testmysqldb
 {
-    public class TestAppService : JPGZServiceAppServiceBase
+    public class TestAppService : JPGZServiceAppServiceBase,ITestAppService
     {
         private readonly IRepository<Person> _personRepository;
 
