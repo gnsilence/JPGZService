@@ -1,6 +1,4 @@
-﻿using Abp.Auditing;
-using Abp.AutoMapper;
-using Abp.Dependency;
+﻿using Abp.AutoMapper;
 using Abp.Grpc.Server;
 using Abp.Grpc.Server.Extensions;
 using Abp.Modules;
@@ -19,10 +17,6 @@ namespace JPGZService
     {
         public override void PreInitialize()
         {
-            Configuration.ReplaceService(typeof(IAuditingStore),()=> {
-                IocManager.RegisterIfNot<IAuditingStore,JPGZAuditStore>(DependencyLifeStyle.Transient);
-            });
-
             //Configuration.Authorization.Providers.Add<JPGZServiceAuthorizationProvider>();
             ServiceInterceptorRegistrar.Initialize(IocManager);
         }
